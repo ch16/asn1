@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">chen1-reflex</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_single_user">SingleUserActivity</string>
+    <string name="title_activity_statistics">StatisticsActivity</string>
+    <string name="title_activity_two_players">TwoPlayers</string>
+    <string name="title_activity_three_players">ThreePlayers</string>
+    <string name="title_activity_four_players">FourPlayers</string>
+    <string name="single_user">Single User Reaction Timer</string>
+    <string name="gameshow_buzzer">Gameshow Buzzer Mode</string>
+    <string name="statistics">Statistics</string>
+    <string name="reaction_button_text">Buzz</string>
+</resources>
