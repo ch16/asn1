@@ -1,5 +1,7 @@
 package com.example.chen1.chen1_reflex;
 
+import android.widget.ArrayAdapter;
+
 import java.util.ArrayList;
 
 /**
@@ -11,6 +13,8 @@ public class StatisticsListController {
     static ArrayList twoPlayerBuzz = new ArrayList<Integer>();
     static ArrayList threePlayerBuzz = new ArrayList<Integer>();
     static ArrayList fourPlayerBuzz = new ArrayList<Integer>();
+    private static final String FILENAME = "file.sav";
+    private ArrayAdapter<Double> adapter;
 
 
     public static ArrayList<Integer> getTwoPlayerStatistics(){

@@ -14,4 +14,14 @@
     <string name="reaction_button_text">Buzz</string>
     <string name="email">Email the Statistics</string>
     <string name="clear_stat">Clear Statistics</string>
+    <string name="two_player_one">Player 1</string>
+    <string name="two_player_two">Player 2</string>
+    <string name="three_player_one">Player 1</string>
+    <string name="three_player_two">Player 2</string>
+    <string name="three_player_three">Player 3</string>
+    <string name="four_player_one">Player 1</string>
+    <string name="four_player_two">Player 2</string>
+    <string name="four_player_three">Player 3</string>
+    <string name="four_player_four">Player 4</string>
+    <string name="intro">Single User Mode:\nWhen the wait is over the player click as soon as possible</string>
 </resources>

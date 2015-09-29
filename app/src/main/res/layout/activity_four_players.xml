@@ -6,7 +6,39 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.example.chen1.chen1_reflex.FourPlayers">
 
-    <TextView android:text="@string/hello_world" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="240dp"
+        android:text="@string/four_player_one"
+        android:id="@+id/four_player_one"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:onClick="playerOne" />
 
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="240dp"
+        android:text="@string/four_player_two"
+        android:id="@+id/four_player_two"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:onClick="playerTwo" />
+
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="240dp"
+        android:text="@string/four_player_three"
+        android:id="@+id/four_player_three"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:onClick="playerThree" />
+
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="240dp"
+        android:text="@string/four_player_four"
+        android:id="@+id/four_player_four"
+        android:layout_alignBottom="@+id/four_player_three"
+        android:layout_alignParentEnd="true"
+        android:onClick="playerFour" />
 </RelativeLayout>

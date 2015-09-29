@@ -22,6 +22,7 @@ public class SingleUserActivity extends AppCompatActivity {
     Random random = new Random();
     String temp;
 
+    boolean early = false;
     boolean timeUp = false;
     double startTime;
     double endTime;
@@ -71,7 +72,7 @@ public class SingleUserActivity extends AppCompatActivity {
 
     public void startGame(){
         randomTime = random.nextInt(2000)+10;
-        ctimer = new CountDownTimer(randomTime,1) {
+        ctimer = new CountDownTimer(randomTime,10) {
             @Override
             public void onTick(long millisUntilFinished) {
                 displaying = false;
@@ -81,11 +82,14 @@ public class SingleUserActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                displayedResult.setText("CLICK NOW!");
+                if (timeUp == false){
+                displayedResult.setText("CLICK NOW!");}
                 timeUp = true;
                 startTime = System.currentTimeMillis();
             }
         }.start();
+
+
     }
 
     public void startAgain(){
@@ -99,6 +103,7 @@ public class SingleUserActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
+                displayedResult.setText("Wait");
                 startGame();
             }
         }.start();
@@ -108,7 +113,10 @@ public class SingleUserActivity extends AppCompatActivity {
     public void checkReflex(View view){
         if (timeUp == false){
             Toast.makeText(this,"You clicked early! Timer Now start again!",Toast.LENGTH_SHORT).show();
+            early = true;
+            ctimer.cancel();
             startGame();
+            displayedResult.setText("Wait");
         }else if (timeUp == true && displaying == false){
 
             endTime = System.currentTimeMillis();
@@ -116,8 +124,8 @@ public class SingleUserActivity extends AppCompatActivity {
             temp = Double.toString(duration/1000);
 
             StatisticsListController.getSingleStatistics().add(duration);
-
             startAgain();
+
         }
     }
 
