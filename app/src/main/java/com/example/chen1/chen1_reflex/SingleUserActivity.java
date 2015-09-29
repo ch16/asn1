@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Random;
 
@@ -104,10 +105,9 @@ public class SingleUserActivity extends AppCompatActivity {
     }
 
 
-
     public void checkReflex(View view){
         if (timeUp == false){
-            displayedResult.setText("You clicked early! Now start again!");
+            Toast.makeText(this,"You clicked early! Timer Now start again!",Toast.LENGTH_SHORT).show();
             startGame();
         }else if (timeUp == true && displaying == false){
 

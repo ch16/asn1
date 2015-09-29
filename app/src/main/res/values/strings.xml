@@ -12,4 +12,6 @@
     <string name="gameshow_buzzer">Gameshow Buzzer Mode</string>
     <string name="statistics">Statistics</string>
     <string name="reaction_button_text">Buzz</string>
+    <string name="email">Email the Statistics</string>
+    <string name="clear_stat">Clear Statistics</string>
 </resources>
