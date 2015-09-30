@@ -49,4 +49,8 @@ public class StatisticsListController {
         singleStatistics.clear();
     }
 
+    public static void setSingleStatistics(ArrayList<Double> singleArraylist){
+        singleStatistics = singleArraylist;
+    }
+
 }

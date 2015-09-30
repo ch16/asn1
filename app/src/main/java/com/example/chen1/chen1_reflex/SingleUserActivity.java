@@ -1,5 +1,6 @@
 package com.example.chen1.chen1_reflex;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.CountDownTimer;
@@ -12,9 +13,16 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.Random;
 
-public class SingleUserActivity extends AppCompatActivity {
+public class SingleUserActivity extends Activity {
 
     TextView displayedResult;
     CountDownTimer ctimer;
@@ -24,11 +32,13 @@ public class SingleUserActivity extends AppCompatActivity {
 
     boolean early = false;
     boolean timeUp = false;
+    boolean start = false;
     double startTime;
     double endTime;
 
     int randomTime;
     boolean displaying = false;
+    static final String FILENAME = "file.sav";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,10 +47,12 @@ public class SingleUserActivity extends AppCompatActivity {
         displayedResult = (TextView)findViewById(R.id.reaction_time_display);
         AlertDialog alertDialog = new AlertDialog.Builder(SingleUserActivity.this).create();
         alertDialog.setTitle("Introduction");
+        alertDialog.setCanceledOnTouchOutside(false);
         alertDialog.setMessage("This game is to test your reaction. DO NOT Click when \"Wait\" is shown, click AS SOON AS you see \"CLICK NOW!\" ");
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+                        start = true;
                         dialog.dismiss();
                         startGame();
                     }
@@ -111,23 +123,40 @@ public class SingleUserActivity extends AppCompatActivity {
 
 
     public void checkReflex(View view){
-        if (timeUp == false){
+        if (timeUp == false && start == true){
             Toast.makeText(this,"You clicked early! Timer Now start again!",Toast.LENGTH_SHORT).show();
             early = true;
             ctimer.cancel();
             startGame();
             displayedResult.setText("Wait");
-        }else if (timeUp == true && displaying == false){
+        }else if (timeUp == true && displaying == false && start == true){
 
             endTime = System.currentTimeMillis();
             double duration = endTime - startTime;
             temp = Double.toString(duration/1000);
 
             StatisticsListController.getSingleStatistics().add(duration);
+            saveInSinleFile();
             startAgain();
-
-        }
+        }else if (start == false){return;}
     }
 
+    public void saveInSinleFile(){
+
+        try {
+            FileOutputStream fos = openFileOutput(FILENAME,MODE_PRIVATE);
+            Gson gson = new Gson();
+            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(fos));
+            gson.toJson(StatisticsListController.getSingleStatistics(), out);
+            out.flush();
+            fos.close();
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            throw new RuntimeException(e);
+        }
+    }
 
 }
