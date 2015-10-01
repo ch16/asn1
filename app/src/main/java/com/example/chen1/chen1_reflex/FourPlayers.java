@@ -1,5 +1,6 @@
 package com.example.chen1.chen1_reflex;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.CountDownTimer;
@@ -9,7 +10,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-public class FourPlayers extends ActionBarActivity {
+import com.google.gson.Gson;
+
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+
+public class FourPlayers extends Activity {
 
     double playerOneTime = Double.POSITIVE_INFINITY;
     double playerTwoTime = Double.POSITIVE_INFINITY;
@@ -19,6 +28,8 @@ public class FourPlayers extends ActionBarActivity {
     CountDownTimer ctimer;
     boolean displaying = true;
     int clickedTimes = 0;
+    static final String FILENAME4 = "file4.sav";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,6 +155,7 @@ public class FourPlayers extends ActionBarActivity {
             resultText = resultText + "\nPlayer 4 Wins!";
             StatisticsListController.getFourPlayerStatistics().add(4);
         }
+        saveInFourPlayerFile();
 
         AlertDialog alertDialog = new AlertDialog.Builder(FourPlayers.this).create();
         alertDialog.setMessage(resultText);
@@ -167,6 +179,24 @@ public class FourPlayers extends ActionBarActivity {
         playerThreeTime = Double.POSITIVE_INFINITY;
         playerFourTime = Double.POSITIVE_INFINITY;
 
+    }
+
+    public void saveInFourPlayerFile(){
+
+        try {
+            FileOutputStream fos = openFileOutput(FILENAME4,MODE_PRIVATE);
+            Gson gson = new Gson();
+            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(fos));
+            gson.toJson(StatisticsListController.getFourPlayerStatistics(), out);
+            out.flush();
+            fos.close();
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            throw new RuntimeException(e);
+        }
     }
 
 }

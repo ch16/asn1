@@ -53,4 +53,16 @@ public class StatisticsListController {
         singleStatistics = singleArraylist;
     }
 
+    public static void setTwoPlayerStatistics(ArrayList<Double> arraylist){
+        twoPlayerBuzz = arraylist;
+    }
+
+    public static void setThreePlayerStatistics(ArrayList<Double> arraylist){
+        threePlayerBuzz = arraylist;
+    }
+
+    public static void setFourPlayerStatistics(ArrayList<Double> arraylist){
+        fourPlayerBuzz = arraylist;
+    }
+
 }

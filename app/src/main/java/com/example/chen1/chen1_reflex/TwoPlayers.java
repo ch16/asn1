@@ -1,5 +1,6 @@
 package com.example.chen1.chen1_reflex;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.CountDownTimer;
@@ -10,7 +11,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-public class TwoPlayers extends ActionBarActivity {
+import com.google.gson.Gson;
+
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+
+public class TwoPlayers extends Activity {
 
     double playerOneTime = Double.POSITIVE_INFINITY;
     double playerTwoTime = Double.POSITIVE_INFINITY;
@@ -18,6 +27,7 @@ public class TwoPlayers extends ActionBarActivity {
     CountDownTimer ctimer;
     boolean displaying = true;
     int clickedTimes = 0;
+    static final String FILENAME2 = "file2.sav";
 
 
     @Override
@@ -106,9 +116,11 @@ public class TwoPlayers extends ActionBarActivity {
         if (playerOneTime>playerTwoTime){
             resultText = resultText + "\nPlayer 2 Wins!";
             StatisticsListController.getTwoPlayerStatistics().add(2);
+            saveInTwoPlayerFile();
         }else if (playerTwoTime>playerOneTime){
             resultText = resultText + "\nPlayer 1 Wins!";
             StatisticsListController.getTwoPlayerStatistics().add(1);
+            saveInTwoPlayerFile();
         }
 
         AlertDialog alertDialog = new AlertDialog.Builder(TwoPlayers.this).create();
@@ -131,4 +143,23 @@ public class TwoPlayers extends ActionBarActivity {
         playerOneTime = Double.POSITIVE_INFINITY;
         playerTwoTime = Double.POSITIVE_INFINITY;
     }
+
+    public void saveInTwoPlayerFile(){
+
+        try {
+            FileOutputStream fos2 = openFileOutput(FILENAME2,MODE_PRIVATE);
+            Gson gson2 = new Gson();
+            BufferedWriter out2 = new BufferedWriter(new OutputStreamWriter(fos2));
+            gson2.toJson(StatisticsListController.getTwoPlayerStatistics(), out2);
+            out2.flush();
+            fos2.close();
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            throw new RuntimeException(e);
+        }
+    }
+
 }

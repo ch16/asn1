@@ -3,12 +3,16 @@ package com.example.chen1.chen1_reflex;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.Loader;
+import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -35,8 +39,7 @@ public class StatisticsActivity extends Activity {
     static final String FILENAME4 = "file4.sav";
 
 
-
-
+    String Message;
     TextView displayStatistics;
     double lastTen = 0;
     double lastHundred = 0;
@@ -60,10 +63,10 @@ public class StatisticsActivity extends Activity {
     int fourPlayerTwo = 0;
     int fourPlayerThree = 0;
     int fourPlayerFour = 0;
-    ArrayList statistics = getSingleStatistics();
-    ArrayList twoPlayerStatistics = getTwoPlayerStatistics();
-    ArrayList threePlayerStatistics = getThreePlayerStatistics();
-    ArrayList fourPlayerStatistics = getFourPlayerStatistics();
+    ArrayList statistics = StatisticsListController.getSingleStatistics();
+    ArrayList twoPlayerStatistics = StatisticsListController.getTwoPlayerStatistics();
+    ArrayList threePlayerStatistics = StatisticsListController.getThreePlayerStatistics();
+    ArrayList fourPlayerStatistics = StatisticsListController.getFourPlayerStatistics();
 
 
     @Override
@@ -101,28 +104,39 @@ public class StatisticsActivity extends Activity {
         loadFromFile();
 
         StatisticsListController.setSingleStatistics(statistics);
+        StatisticsListController.setTwoPlayerStatistics(twoPlayerStatistics);
+        StatisticsListController.setThreePlayerStatistics(threePlayerStatistics);
+        StatisticsListController.setFourPlayerStatistics(fourPlayerStatistics);
+
         displayStatistics = (TextView) findViewById(R.id.statistics_text);
+        displayStatistics.setMovementMethod(new ScrollingMovementMethod());
+
         ArrayList temp;
         temp = statistics;
 
         lastTen = 0;
         for (int i = 1; i < 11; i++) {
             if ((statistics.size() - i) >= 0) {
-                lastTen = lastTen + (double) statistics.get(statistics.size() - i);}
+                lastTen = lastTen + (double) statistics.get(statistics.size() - i);
+            }
         }
 
         lastHundred = 0;
         for (int i = 1; i < 101; i++) {
             if ((statistics.size() - i) >= 0) {
-                lastHundred = lastHundred + (double) statistics.get(statistics.size() - i);}
+                lastHundred = lastHundred + (double) statistics.get(statistics.size() - i);
+            }
         }
 
         if (statistics.size() < 10) {
-            averageTen = lastTen / (statistics.size() * 1000);}
+            averageTen = lastTen / (statistics.size() * 1000);
+        }
         if (statistics.size() >= 10) {
-            averageTen = lastTen / 10000;}
+            averageTen = lastTen / 10000;
+        }
         if (statistics.size() < 100) {
-            averageHundred = lastHundred / (statistics.size() * 1000);}
+            averageHundred = lastHundred / (statistics.size() * 1000);
+        }
         if (statistics.size() >= 100) {
             averageHundred = lastHundred / 100000;
         }
@@ -200,7 +214,6 @@ public class StatisticsActivity extends Activity {
         }
 
 
-
         for (int i = 1; i <= twoPlayerStatistics.size(); i++) {
             if (twoPlayerStatistics.get(twoPlayerStatistics.size() - i) == 1) {
                 twoPlayerOne++;
@@ -213,23 +226,30 @@ public class StatisticsActivity extends Activity {
 
         for (int i = 1; i <= threePlayerStatistics.size(); i++) {
             if (threePlayerStatistics.get(threePlayerStatistics.size() - i) == 1) {
-                threePlayerOne++;}
+                threePlayerOne++;
+            }
             if (threePlayerStatistics.get(threePlayerStatistics.size() - i) == 2) {
-                threePlayerTwo++;}
+                threePlayerTwo++;
+            }
             if (threePlayerStatistics.get(threePlayerStatistics.size() - i) == 3) {
-                threePlayerThree++;}
+                threePlayerThree++;
+            }
         }
 
 
         for (int i = 1; i <= fourPlayerStatistics.size(); i++) {
             if (fourPlayerStatistics.get(fourPlayerStatistics.size() - i) == 1) {
-                fourPlayerOne++;}
+                fourPlayerOne++;
+            }
             if (fourPlayerStatistics.get(fourPlayerStatistics.size() - i) == 2) {
-                fourPlayerTwo++;}
+                fourPlayerTwo++;
+            }
             if (fourPlayerStatistics.get(fourPlayerStatistics.size() - i) == 3) {
-                fourPlayerThree++;}
+                fourPlayerThree++;
+            }
             if (fourPlayerStatistics.get(fourPlayerStatistics.size() - i) == 4) {
-                fourPlayerFour++;}
+                fourPlayerFour++;
+            }
         }
 
 
@@ -243,10 +263,12 @@ public class StatisticsActivity extends Activity {
                         + maxTen + "\nMinimum of last hundred: " + minHundred + "\nMaximum of last hundred: " + maxHundred
                         + "\nMinimum of all: " + minAll + "\nMaximum of all: " + maxAll
                         + "\n-----------------"
-                        + "\nBuzz Count: " + "\n2 Players: Player 1 buzzes: " + twoPlayerOne + " times | Player 2 buzzes: " + twoPlayerTwo + " times"
-                        + "\n3 Players: Player 1 buzzes: " + threePlayerOne + " times | Player 2 buzzes: " + threePlayerTwo + " times | Player 3 buzzes: " + threePlayerThree + " times"
-                        + "\n4 Players: Player 1 buzzes: " + fourPlayerOne + " times | Player 2 buzzes: " + fourPlayerTwo + " times | Player 3 buzzes: " + fourPlayerThree + " times | Player 4 buzzes: " + fourPlayerFour + " times"
+                        + "\nBuzz Count: " + "\n2 Players: Player One buzzes: " + twoPlayerOne + " times  |  Player Two buzzes: " + twoPlayerTwo + " times"
+                        + "\n3 Players: Player One buzzes: " + threePlayerOne + " times  |  Player Two buzzes: " + threePlayerTwo + " times  |  Player Three buzzes: " + threePlayerThree + " times"
+                        + "\n4 Players: Player One buzzes: " + fourPlayerOne + " times  |  Player Two buzzes: " + fourPlayerTwo + " times  |  Player Three buzzes: " + fourPlayerThree + " times  |  Player Four buzzes: " + fourPlayerFour + " times"
         );
+
+        Message = displayStatistics.getText().toString();
     }
 
 
@@ -301,38 +323,34 @@ public class StatisticsActivity extends Activity {
     }
 
 
-    protected void sendEmail() {
+    public void sendEmail(View view){
+        String[] TO = {""};
+        String[] CC = {""};
+        Intent emailIntent = new Intent(Intent.ACTION_SEND);
 
-        String to = "chenhong1211@gmail.com";
-        String subject = "Statistics";
-        String message = displayStatistics.getText().toString();
+        emailIntent.setData(Uri.parse("mailto:"));
+        emailIntent.setType("text/plain");
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
+        emailIntent.putExtra(Intent.EXTRA_CC, CC);
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Your subject");
+        emailIntent.putExtra(Intent.EXTRA_TEXT, Message);
 
-        Intent email = new Intent(Intent.ACTION_SEND);
-        email.putExtra(Intent.EXTRA_EMAIL, new String[]{to});
-        email.putExtra(Intent.EXTRA_SUBJECT, subject);
-        email.putExtra(Intent.EXTRA_TEXT, message);
-
-        // need this to prompts email client only
-        email.setType("message/rfc822");
-
-        startActivity(Intent.createChooser(email, "Choose an Email client"));
+        try {
+        startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+        finish();
+    }catch (android.content.ActivityNotFoundException ex) {
+        Toast.makeText(StatisticsActivity.this, "There is no email client installed.", Toast.LENGTH_SHORT).show();
+    }
 
     }
+
+
 
     private void loadFromFile() {
         //chagne all the string arraylist into double arraylist
         try {
             FileInputStream fis = openFileInput(FILENAME);
-            FileInputStream fis2 = openFileInput(FILENAME2);
-            FileInputStream fis3 = openFileInput(FILENAME3);
-            FileInputStream fis4 = openFileInput(FILENAME4);
-
             BufferedReader in = new BufferedReader(new InputStreamReader(fis));
-            BufferedReader in2 = new BufferedReader(new InputStreamReader(fis2));
-            BufferedReader in3 = new BufferedReader(new InputStreamReader(fis3));
-            BufferedReader in4 = new BufferedReader(new InputStreamReader(fis4));
-
-
             Gson gson = new Gson();
             Type arraylistType = new TypeToken<ArrayList<Double>>() {
             }.getType();
@@ -343,37 +361,45 @@ public class StatisticsActivity extends Activity {
                 line = in.readLine();
             }
 
+
+            FileInputStream fis2 = openFileInput(FILENAME2);
+            BufferedReader in2 = new BufferedReader(new InputStreamReader(fis2));
             Gson gson2 = new Gson();
-            Type arraylistType2 = new TypeToken<ArrayList<Double>>() {
+            Type arraylistType2 = new TypeToken<ArrayList<Integer>>() {
             }.getType();
             twoPlayerStatistics = gson2.fromJson(in2, arraylistType2);
             String line2 = in2.readLine();
             while (line2 != null) {
-                twoPlayerStatistics.add(new Double(line2));
+                twoPlayerStatistics.add(new Integer(line2));
                 line2 = in2.readLine();
             }
 
-
+            FileInputStream fis3 = openFileInput(FILENAME3);
+            BufferedReader in3 = new BufferedReader(new InputStreamReader(fis3));
             Gson gson3 = new Gson();
-            Type arraylistType3 = new TypeToken<ArrayList<Double>>() {
+            Type arraylistType3 = new TypeToken<ArrayList<Integer>>() {
             }.getType();
             threePlayerStatistics = gson3.fromJson(in3, arraylistType3);
             String line3 = in3.readLine();
             while (line3 != null) {
-                threePlayerStatistics.add(new Double(line3));
+                threePlayerStatistics.add(new Integer(line3));
                 line3 = in3.readLine();
             }
 
-
+            FileInputStream fis4 = openFileInput(FILENAME4);
+            BufferedReader in4 = new BufferedReader(new InputStreamReader(fis4));
             Gson gson4 = new Gson();
-            Type arraylistType4 = new TypeToken<ArrayList<Double>>() {
+            Type arraylistType4 = new TypeToken<ArrayList<Integer>>() {
             }.getType();
             fourPlayerStatistics = gson4.fromJson(in4, arraylistType4);
             String line4 = in4.readLine();
             while (line4 != null) {
-                fourPlayerStatistics.add(new Double(line4));
+                fourPlayerStatistics.add(new Integer(line4));
                 line4 = in4.readLine();
             }
+
+
+
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
             statistics = new ArrayList<Double>();
@@ -382,6 +408,7 @@ public class StatisticsActivity extends Activity {
             throw new RuntimeException(e);
         }
     }
+
 
     public void saveInFile(){
 

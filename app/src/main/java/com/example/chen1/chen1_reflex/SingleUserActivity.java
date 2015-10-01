@@ -136,12 +136,12 @@ public class SingleUserActivity extends Activity {
             temp = Double.toString(duration/1000);
 
             StatisticsListController.getSingleStatistics().add(duration);
-            saveInSinleFile();
+            saveInSingleFile();
             startAgain();
         }else if (start == false){return;}
     }
 
-    public void saveInSinleFile(){
+    public void saveInSingleFile(){
 
         try {
             FileOutputStream fos = openFileOutput(FILENAME,MODE_PRIVATE);
