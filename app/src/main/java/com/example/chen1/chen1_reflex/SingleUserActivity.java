@@ -14,13 +14,23 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Random;
+
+import static com.example.chen1.chen1_reflex.StatisticsListController.singleStatistics;
+import static com.example.chen1.chen1_reflex.StatisticsListController.threePlayerBuzz;
+import static com.example.chen1.chen1_reflex.StatisticsListController.twoPlayerBuzz;
 
 public class SingleUserActivity extends Activity {
 
@@ -28,23 +38,21 @@ public class SingleUserActivity extends Activity {
     CountDownTimer ctimer;
     CountDownTimer againTimer;
     Random random = new Random();
-    String temp;
 
     boolean early = false;
     boolean timeUp = false;
     boolean start = false;
-    double startTime;
-    double endTime;
 
     int randomTime;
     boolean displaying = false;
+    ReactionTimer reactionTimer = new ReactionTimer();
     static final String FILENAME = "file.sav";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_user);
-        displayedResult = (TextView)findViewById(R.id.reaction_time_display);
+        displayedResult = (TextView) findViewById(R.id.reaction_time_display);
         AlertDialog alertDialog = new AlertDialog.Builder(SingleUserActivity.this).create();
         alertDialog.setTitle("Introduction");
         alertDialog.setCanceledOnTouchOutside(false);
@@ -53,6 +61,7 @@ public class SingleUserActivity extends Activity {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         start = true;
+                        loadFromSingleFile();
                         dialog.dismiss();
                         startGame();
                     }
@@ -82,9 +91,9 @@ public class SingleUserActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void startGame(){
-        randomTime = random.nextInt(2000)+10;
-        ctimer = new CountDownTimer(randomTime,10) {
+    public void startGame() {
+        randomTime = random.nextInt(2000) + 10;
+        ctimer = new CountDownTimer(randomTime, 10) {
             @Override
             public void onTick(long millisUntilFinished) {
                 displaying = false;
@@ -94,60 +103,84 @@ public class SingleUserActivity extends Activity {
 
             @Override
             public void onFinish() {
-                if (timeUp == false){
-                displayedResult.setText("CLICK NOW!");}
+                if (timeUp == false) {
+                    displayedResult.setText("CLICK NOW!");
+                }
                 timeUp = true;
-                startTime = System.currentTimeMillis();
+                reactionTimer.setStartTimeStamp();
             }
         }.start();
-
-
     }
 
-    public void startAgain(){
-        againTimer = new CountDownTimer(1000,1){
-
+    public void startAgain() {
+        againTimer = new CountDownTimer(1000, 1) {
             @Override
             public void onTick(long millisUntilFinished) {
                 displaying = true;
-                displayedResult.setText("the lag is " + temp + " seconds" + "\nThe game will start again");
+                displayedResult.setText(reactionTimer.lagText());
             }
 
             @Override
             public void onFinish() {
                 displayedResult.setText("Wait");
+                reactionTimer.clearResult();
                 startGame();
             }
         }.start();
     }
 
-
-    public void checkReflex(View view){
-        if (timeUp == false && start == true){
-            Toast.makeText(this,"You clicked early! Timer Now start again!",Toast.LENGTH_SHORT).show();
+    public void checkReflex(View view) {
+        if (timeUp == false && start == true) {
+            Toast.makeText(this, "You clicked early! Timer Now start again!", Toast.LENGTH_SHORT).show();
             early = true;
             ctimer.cancel();
             startGame();
             displayedResult.setText("Wait");
-        }else if (timeUp == true && displaying == false && start == true){
-
-            endTime = System.currentTimeMillis();
-            double duration = endTime - startTime;
-            temp = Double.toString(duration/1000);
-
-            StatisticsListController.getSingleStatistics().add(duration);
+        } else if (timeUp == true && displaying == false && start == true) {
+            reactionTimer.setEndTimeStamp();
+            reactionTimer.getLag();
+            StatisticsListController.singleStatistics.add(reactionTimer.lag());
             saveInSingleFile();
             startAgain();
-        }else if (start == false){return;}
+        } else if (start == false) {
+            return;
+        }
     }
 
-    public void saveInSingleFile(){
+
+    public void loadFromSingleFile() {
+
+        //chagne all the string arraylist into double arraylist
+        try {
+            FileInputStream fis = openFileInput(FILENAME);
+            BufferedReader in = new BufferedReader(new InputStreamReader(fis));
+            Gson gson = new Gson();
+            Type arraylistType = new TypeToken<ArrayList<Double>>() {
+            }.getType();
+            StatisticsListController.singleStatistics = gson.fromJson(in, arraylistType);
+            String line = in.readLine();
+            while (line != null) {
+                StatisticsListController.singleStatistics.add(new Double(line));
+                line = in.readLine();
+            }
+
+
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            StatisticsListController.singleStatistics = new ArrayList<Double>();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void saveInSingleFile() {
 
         try {
-            FileOutputStream fos = openFileOutput(FILENAME,MODE_PRIVATE);
+            FileOutputStream fos = openFileOutput(FILENAME, MODE_PRIVATE);
             Gson gson = new Gson();
             BufferedWriter out = new BufferedWriter(new OutputStreamWriter(fos));
-            gson.toJson(StatisticsListController.getSingleStatistics(), out);
+            gson.toJson(StatisticsListController.singleStatistics, out);
             out.flush();
             fos.close();
         } catch (FileNotFoundException e) {

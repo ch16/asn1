@@ -12,17 +12,24 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 public class TwoPlayers extends Activity {
 
     double playerOneTime = Double.POSITIVE_INFINITY;
     double playerTwoTime = Double.POSITIVE_INFINITY;
+    StatisticsActivity a = new StatisticsActivity();
 
     CountDownTimer ctimer;
     boolean displaying = true;
@@ -34,7 +41,7 @@ public class TwoPlayers extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_two_players);
-
+        loadFromTwoPlayerFile();
         AlertDialog alertDialog = new AlertDialog.Builder(TwoPlayers.this).create();
         alertDialog.setMessage("The Player Who Clicks Faster Wins");
         alertDialog.setCanceledOnTouchOutside(false);
@@ -161,5 +168,32 @@ public class TwoPlayers extends Activity {
             throw new RuntimeException(e);
         }
     }
+
+    public void loadFromTwoPlayerFile() {
+
+        //chagne all the string arraylist into double arraylist
+        try {
+            FileInputStream fis2 = openFileInput(FILENAME2);
+            BufferedReader in2 = new BufferedReader(new InputStreamReader(fis2));
+            Gson gson2 = new Gson();
+            Type arraylistType2 = new TypeToken<ArrayList<Integer>>() {
+            }.getType();
+            StatisticsListController.singleStatistics = gson2.fromJson(in2, arraylistType2);
+            String line2 = in2.readLine();
+            while (line2 != null) {
+                StatisticsListController.singleStatistics.add(new Integer(line2));
+                line2 = in2.readLine();
+            }
+
+
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            StatisticsListController.singleStatistics = new ArrayList<Double>();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            throw new RuntimeException(e);
+        }
+    }
+
 
 }

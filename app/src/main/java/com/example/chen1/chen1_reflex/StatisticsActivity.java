@@ -41,15 +41,13 @@ public class StatisticsActivity extends Activity {
 
     String Message;
     TextView displayStatistics;
-    double lastTen = 0;
-    double lastHundred = 0;
-    double averageTen = 0;
-    double averageHundred = 0;
-    double averageAll = 0;
+    StatisticsCalculator sCal = new StatisticsCalculator();
+
+
+
     double medianTen = Double.NaN;
     double medianHundred = Double.NaN;
     double medianAll = Double.NaN;
-    double all = 0;
 
     ArrayList lastTenList = new ArrayList<Double>();
     ArrayList lastHundredList = new ArrayList<Double>();
@@ -63,10 +61,6 @@ public class StatisticsActivity extends Activity {
     int fourPlayerTwo = 0;
     int fourPlayerThree = 0;
     int fourPlayerFour = 0;
-    ArrayList statistics = StatisticsListController.getSingleStatistics();
-    ArrayList twoPlayerStatistics = StatisticsListController.getTwoPlayerStatistics();
-    ArrayList threePlayerStatistics = StatisticsListController.getThreePlayerStatistics();
-    ArrayList fourPlayerStatistics = StatisticsListController.getFourPlayerStatistics();
 
 
     @Override
@@ -103,153 +97,74 @@ public class StatisticsActivity extends Activity {
 
         loadFromFile();
 
-        StatisticsListController.setSingleStatistics(statistics);
-        StatisticsListController.setTwoPlayerStatistics(twoPlayerStatistics);
-        StatisticsListController.setThreePlayerStatistics(threePlayerStatistics);
-        StatisticsListController.setFourPlayerStatistics(fourPlayerStatistics);
-
+        ArrayList statistics = StatisticsListController.getSingleStatistics();
+        ArrayList twoPlayerStatistics = StatisticsListController.getTwoPlayerStatistics();
+        ArrayList threePlayerStatistics = StatisticsListController.getThreePlayerStatistics();
+        ArrayList fourPlayerStatistics = StatisticsListController.getFourPlayerStatistics();
         displayStatistics = (TextView) findViewById(R.id.statistics_text);
         displayStatistics.setMovementMethod(new ScrollingMovementMethod());
 
         ArrayList temp;
         temp = statistics;
 
-        lastTen = 0;
-        for (int i = 1; i < 11; i++) {
-            if ((statistics.size() - i) >= 0) {
-                lastTen = lastTen + (double) statistics.get(statistics.size() - i);
-            }
-        }
 
-        lastHundred = 0;
-        for (int i = 1; i < 101; i++) {
-            if ((statistics.size() - i) >= 0) {
-                lastHundred = lastHundred + (double) statistics.get(statistics.size() - i);
-            }
-        }
+        double averageTen = sCal.findAverageOfLastN(statistics,10);
+        double averageHundred = sCal.findAverageOfLastN(statistics,100);
+        double averageAll = sCal.findAverageOfLastN(statistics,statistics.size());
 
-        if (statistics.size() < 10) {
-            averageTen = lastTen / (statistics.size() * 1000);
-        }
-        if (statistics.size() >= 10) {
-            averageTen = lastTen / 10000;
-        }
-        if (statistics.size() < 100) {
-            averageHundred = lastHundred / (statistics.size() * 1000);
-        }
-        if (statistics.size() >= 100) {
-            averageHundred = lastHundred / 100000;
-        }
         DecimalFormat formatter = new DecimalFormat("#0.0000");
 
-        all = 0;
 
-        for (int i = 1; i <= temp.size(); i++) {
-            all = all + (double) temp.get(temp.size() - i);
-        }
-        averageAll = all / (temp.size() * 1000);
-
-        double maxTen = findMax(statistics, 10) / 1000;
-        double minTen = findMin(statistics, 10) / 1000;
-        double maxHundred = findMax(statistics, 100) / 1000;
-        double minHundred = findMin(statistics, 100) / 1000;
-        double maxAll = findMax(statistics, statistics.size()) / 1000;
-        double minAll = findMin(statistics, statistics.size()) / 1000;
-
-        if (statistics.size() == 0) {
-            maxTen = Double.NaN;
-            minTen = Double.NaN;
-            maxHundred = Double.NaN;
-            minHundred = Double.NaN;
-            minAll = Double.NaN;
-            maxAll = Double.NaN;
-        }
+        double maxTen = sCal.findMax(statistics, 10) / 1000;
+        double minTen = sCal.findMin(statistics, 10) / 1000;
+        double maxHundred = sCal.findMax(statistics, 100) / 1000;
+        double minHundred = sCal.findMin(statistics, 100) / 1000;
+        double maxAll = sCal.findMax(statistics, statistics.size()) / 1000;
+        double minAll = sCal.findMin(statistics, statistics.size()) / 1000;
 
         for (int i = 1; i <= 10; i++) {
             if (statistics.size() - i >= 0) {
-                lastTenList.add(statistics.get(statistics.size() - i));
-            }
-        }
-
+                lastTenList.add(statistics.get(statistics.size() - i));}}
 
         for (int i = 1; i <= 100; i++) {
             if (statistics.size() - i >= 0) {
-                lastHundredList.add(statistics.get(statistics.size() - i));
-            }
-        }
-
+                lastHundredList.add(statistics.get(statistics.size() - i));}}
 
         Collections.sort(lastTenList);
-
-        if (lastTenList.size() % 2 == 1) {
-            medianTen = (double) lastTenList.get((int) (lastTenList.size() / 2)) / 1000;
-        } else if (lastTenList.size() % 2 == 0 && lastTenList.size() != 0) {
-            medianTen = (double) lastTenList.get((int) (lastTenList.size() / 2) - 1) + (double) lastTenList.get((int) lastTenList.size() / 2);
-            medianTen = medianTen / 2000;
-        } else if (lastTenList.size() == 0) {
-            medianTen = Double.NaN;
-        }
-
-
+        medianTen = sCal.findMedian(lastTenList);
         Collections.sort(lastHundredList);
-
-        if (lastHundredList.size() % 2 == 1) {
-            medianHundred = (double) lastHundredList.get((int) (lastHundredList.size() / 2)) / 1000;
-        } else if (lastHundredList.size() % 2 == 0 && lastHundredList.size() != 0) {
-            medianHundred = (double) lastHundredList.get((int) (lastHundredList.size() / 2) - 1) + (double) lastHundredList.get((int) lastHundredList.size() / 2);
-            medianHundred = medianHundred / 2000;
-        } else if (lastHundredList.size() == 0) {
-            medianHundred = Double.NaN;
-        }
-
+        medianHundred = sCal.findMedian(lastHundredList);
         Collections.sort(temp);
-
-        if (temp.size() % 2 == 1) {
-            medianAll = (double) temp.get((int) (temp.size() / 2)) / 1000;
-        } else if (temp.size() % 2 == 0 && temp.size() != 0) {
-            medianAll = (double) temp.get((int) (temp.size() / 2) - 1) + (double) temp.get((int) temp.size() / 2);
-            medianAll = medianAll / 2000;
-        } else if (temp.size() == 0) {
-            medianAll = Double.NaN;
-        }
+        medianAll = sCal.findMedian(temp);
 
 
         for (int i = 1; i <= twoPlayerStatistics.size(); i++) {
             if (twoPlayerStatistics.get(twoPlayerStatistics.size() - i) == 1) {
-                twoPlayerOne++;
-            }
+                twoPlayerOne++;}
             if (twoPlayerStatistics.get(twoPlayerStatistics.size() - i) == 2) {
-                twoPlayerTwo++;
-            }
+                twoPlayerTwo++;}
         }
 
 
         for (int i = 1; i <= threePlayerStatistics.size(); i++) {
             if (threePlayerStatistics.get(threePlayerStatistics.size() - i) == 1) {
-                threePlayerOne++;
-            }
+                threePlayerOne++;}
             if (threePlayerStatistics.get(threePlayerStatistics.size() - i) == 2) {
-                threePlayerTwo++;
-            }
+                threePlayerTwo++;}
             if (threePlayerStatistics.get(threePlayerStatistics.size() - i) == 3) {
-                threePlayerThree++;
-            }
+                threePlayerThree++;}
         }
 
 
         for (int i = 1; i <= fourPlayerStatistics.size(); i++) {
             if (fourPlayerStatistics.get(fourPlayerStatistics.size() - i) == 1) {
-                fourPlayerOne++;
-            }
+                fourPlayerOne++;}
             if (fourPlayerStatistics.get(fourPlayerStatistics.size() - i) == 2) {
-                fourPlayerTwo++;
-            }
+                fourPlayerTwo++;}
             if (fourPlayerStatistics.get(fourPlayerStatistics.size() - i) == 3) {
-                fourPlayerThree++;
-            }
+                fourPlayerThree++;}
             if (fourPlayerStatistics.get(fourPlayerStatistics.size() - i) == 4) {
-                fourPlayerFour++;
-            }
+                fourPlayerFour++;}
         }
 
 
@@ -269,36 +184,10 @@ public class StatisticsActivity extends Activity {
         );
 
         Message = displayStatistics.getText().toString();
+        saveInFile();
     }
 
 
-    public double findMax(ArrayList stastistics, int tenHundred) {
-        double max = 0;
-        double temp = 0;
-        for (int i = 1; i <= tenHundred; i++) {
-            if (stastistics.size() - i >= 0) {
-                temp = (double) stastistics.get(stastistics.size() - i);
-                if (temp > max) {
-                    max = temp;
-                }
-            }
-        }
-        return max;
-    }
-
-    public double findMin(ArrayList stastistics, int tenHundred) {
-        double min = Double.POSITIVE_INFINITY;
-        double temp = 0;
-        for (int i = 1; i <= tenHundred; i++) {
-            if (stastistics.size() - i >= 0) {
-                temp = (double) stastistics.get(stastistics.size() - i);
-                if (temp < min) {
-                    min = temp;
-                }
-            }
-        }
-        return min;
-    }
 
     public void clearReactionStat(View view) {
         clearSinlgeStatistics();
@@ -341,73 +230,8 @@ public class StatisticsActivity extends Activity {
     }catch (android.content.ActivityNotFoundException ex) {
         Toast.makeText(StatisticsActivity.this, "There is no email client installed.", Toast.LENGTH_SHORT).show();
     }
-
     }
 
-
-
-    private void loadFromFile() {
-        //chagne all the string arraylist into double arraylist
-        try {
-            FileInputStream fis = openFileInput(FILENAME);
-            BufferedReader in = new BufferedReader(new InputStreamReader(fis));
-            Gson gson = new Gson();
-            Type arraylistType = new TypeToken<ArrayList<Double>>() {
-            }.getType();
-            statistics = gson.fromJson(in, arraylistType);
-            String line = in.readLine();
-            while (line != null) {
-                statistics.add(new Double(line));
-                line = in.readLine();
-            }
-
-
-            FileInputStream fis2 = openFileInput(FILENAME2);
-            BufferedReader in2 = new BufferedReader(new InputStreamReader(fis2));
-            Gson gson2 = new Gson();
-            Type arraylistType2 = new TypeToken<ArrayList<Integer>>() {
-            }.getType();
-            twoPlayerStatistics = gson2.fromJson(in2, arraylistType2);
-            String line2 = in2.readLine();
-            while (line2 != null) {
-                twoPlayerStatistics.add(new Integer(line2));
-                line2 = in2.readLine();
-            }
-
-            FileInputStream fis3 = openFileInput(FILENAME3);
-            BufferedReader in3 = new BufferedReader(new InputStreamReader(fis3));
-            Gson gson3 = new Gson();
-            Type arraylistType3 = new TypeToken<ArrayList<Integer>>() {
-            }.getType();
-            threePlayerStatistics = gson3.fromJson(in3, arraylistType3);
-            String line3 = in3.readLine();
-            while (line3 != null) {
-                threePlayerStatistics.add(new Integer(line3));
-                line3 = in3.readLine();
-            }
-
-            FileInputStream fis4 = openFileInput(FILENAME4);
-            BufferedReader in4 = new BufferedReader(new InputStreamReader(fis4));
-            Gson gson4 = new Gson();
-            Type arraylistType4 = new TypeToken<ArrayList<Integer>>() {
-            }.getType();
-            fourPlayerStatistics = gson4.fromJson(in4, arraylistType4);
-            String line4 = in4.readLine();
-            while (line4 != null) {
-                fourPlayerStatistics.add(new Integer(line4));
-                line4 = in4.readLine();
-            }
-
-
-
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            statistics = new ArrayList<Double>();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            throw new RuntimeException(e);
-        }
-    }
 
 
     public void saveInFile(){
@@ -419,15 +243,19 @@ public class StatisticsActivity extends Activity {
             FileOutputStream fos4 = openFileOutput(FILENAME4, MODE_PRIVATE);
 
             Gson gson = new Gson();
+            Gson gson2 = new Gson();
+            Gson gson3 = new Gson();
+            Gson gson4 = new Gson();
+
             BufferedWriter out = new BufferedWriter(new OutputStreamWriter(fos));
             BufferedWriter out2 = new BufferedWriter(new OutputStreamWriter(fos2));
             BufferedWriter out3 = new BufferedWriter(new OutputStreamWriter(fos3));
             BufferedWriter out4 = new BufferedWriter(new OutputStreamWriter(fos4));
 
             gson.toJson(getSingleStatistics(), out);
-            gson.toJson(getTwoPlayerStatistics(), out2);
-            gson.toJson(getThreePlayerStatistics(), out3);
-            gson.toJson(getFourPlayerStatistics(), out4);
+            gson2.toJson(getTwoPlayerStatistics(), out2);
+            gson3.toJson(getThreePlayerStatistics(), out3);
+            gson4.toJson(getFourPlayerStatistics(), out4);
 
             out.flush();
             out2.flush();
@@ -447,4 +275,65 @@ public class StatisticsActivity extends Activity {
             throw new RuntimeException(e);
         }
     }
+
+    public void loadFromFile() {
+        //chagne all the string arraylist into double arraylist
+        try {
+            FileInputStream fis = openFileInput(FILENAME);
+            BufferedReader in = new BufferedReader(new InputStreamReader(fis));
+            Gson gson = new Gson();
+            Type arraylistType = new TypeToken<ArrayList<Double>>() {
+            }.getType();
+            singleStatistics = gson.fromJson(in, arraylistType);
+            String line = in.readLine();
+            while (line != null) {
+                singleStatistics.add(new Double(line));
+                line = in.readLine();
+            }
+
+            FileInputStream fis2 = openFileInput(FILENAME2);
+            BufferedReader in2 = new BufferedReader(new InputStreamReader(fis2));
+            Gson gson2 = new Gson();
+            Type arraylistType2 = new TypeToken<ArrayList<Integer>>() {
+            }.getType();
+            twoPlayerBuzz = gson2.fromJson(in2, arraylistType2);
+            String line2 = in2.readLine();
+            while (line2 != null) {
+                twoPlayerBuzz.add(new Integer(line2));
+                line2 = in2.readLine();
+            }
+
+            FileInputStream fis3 = openFileInput(FILENAME3);
+            BufferedReader in3 = new BufferedReader(new InputStreamReader(fis3));
+            Gson gson3 = new Gson();
+            Type arraylistType3 = new TypeToken<ArrayList<Integer>>() {
+            }.getType();
+            threePlayerBuzz = gson3.fromJson(in3, arraylistType3);
+            String line3 = in3.readLine();
+            while (line3 != null) {
+                threePlayerBuzz.add(new Integer(line3));
+                line3 = in3.readLine();
+            }
+
+            FileInputStream fis4 = openFileInput(FILENAME4);
+            BufferedReader in4 = new BufferedReader(new InputStreamReader(fis4));
+            Gson gson4 = new Gson();
+            Type arraylistType4 = new TypeToken<ArrayList<Integer>>() {
+            }.getType();
+            threePlayerBuzz = gson4.fromJson(in4, arraylistType4);
+            String line4 = in4.readLine();
+            while (line4 != null) {
+                threePlayerBuzz.add(new Integer(line4));
+                line4 = in4.readLine();
+            }
+
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            singleStatistics = new ArrayList<Double>();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            throw new RuntimeException(e);
+        }
+    }
+
 }

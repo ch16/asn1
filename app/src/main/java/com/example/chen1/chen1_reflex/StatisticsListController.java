@@ -1,21 +1,33 @@
 package com.example.chen1.chen1_reflex;
 
+import android.app.Activity;
 import android.widget.ArrayAdapter;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 /**
  * Created by chen1 on 9/28/15.
  */
-public class StatisticsListController {
+public class StatisticsListController{
 
     static ArrayList singleStatistics = new ArrayList<Double>();
     static ArrayList twoPlayerBuzz = new ArrayList<Integer>();
     static ArrayList threePlayerBuzz = new ArrayList<Integer>();
     static ArrayList fourPlayerBuzz = new ArrayList<Integer>();
-    private static final String FILENAME = "file.sav";
-    private ArrayAdapter<Double> adapter;
 
+    static final String FILENAME = "file.sav";
+    static final String FILENAME2 = "file2.sav";
+    static final String FILENAME3 = "file3.sav";
+    static final String FILENAME4 = "file4.sav";
 
     public static ArrayList<Integer> getTwoPlayerStatistics(){
         return twoPlayerBuzz;
@@ -64,5 +76,7 @@ public class StatisticsListController {
     public static void setFourPlayerStatistics(ArrayList<Double> arraylist){
         fourPlayerBuzz = arraylist;
     }
+
+
 
 }
