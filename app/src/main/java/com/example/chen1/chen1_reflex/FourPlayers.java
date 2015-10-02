@@ -78,6 +78,11 @@ public class FourPlayers extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onStart(){
+        super.onStart();
+        loadFromFile4();
+    }
 
     public void playerOne(View view){
         if (displaying == false){

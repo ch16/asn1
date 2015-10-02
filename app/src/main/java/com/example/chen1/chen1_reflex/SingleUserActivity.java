@@ -92,6 +92,12 @@ public class SingleUserActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onStart(){
+        super.onStart();
+        loadFromSingleFile();
+    }
+
     public void startGame() {
         randomTime = random.nextInt(2000) + 10;
         ctimer = new CountDownTimer(randomTime, 10) {

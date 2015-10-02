@@ -92,6 +92,11 @@ public class StatisticsActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onStart(){
+        super.onStart();
+        loadFromFile();
+    }
 
     public void calculateStatistics() {
 

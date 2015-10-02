@@ -77,6 +77,12 @@ public class ThreePlayers extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onStart(){
+        super.onStart();
+        loadFromFile3();
+    }
+
     public void playerOne(View view) {
         if (displaying == false) {
             clickedTimes++;

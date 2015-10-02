@@ -41,8 +41,8 @@ public class TwoPlayers extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_two_players);
-        loadFromFile2();
 
+        loadFromFile2();
         AlertDialog alertDialog = new AlertDialog.Builder(TwoPlayers.this).create();
         alertDialog.setMessage("The Player Who Clicks Faster Wins");
         alertDialog.setCanceledOnTouchOutside(false);
@@ -78,12 +78,18 @@ public class TwoPlayers extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onStart(){
+        super.onStart();
+        loadFromFile2();
+    }
+
     public void playerOne(View view){
         if (displaying == false){
             clickedTimes ++;
             playerOneTime = System.currentTimeMillis();
             if (clickedTimes == 1) {
-                waitToCheck();
+                checkResult();
             }
         }
     }
@@ -93,23 +99,11 @@ public class TwoPlayers extends Activity {
             clickedTimes ++;
             playerTwoTime = System.currentTimeMillis();
             if (clickedTimes == 1) {
-                waitToCheck();
+                checkResult();
             }
         }
     }
 
-    public void waitToCheck(){
-        ctimer = new CountDownTimer(200,1) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-            }
-
-            @Override
-            public void onFinish() {
-                checkResult();
-            }
-        }.start();
-    }
 
     public void checkResult(){
         displaying = true;
