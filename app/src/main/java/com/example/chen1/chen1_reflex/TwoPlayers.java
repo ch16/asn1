@@ -37,7 +37,7 @@ public class TwoPlayers extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_two_players);
-        loadFromFile2();
+        saveLoadFiles.loadFromFile(TwoPlayers.this);
 
         AlertDialog alertDialog = new AlertDialog.Builder(TwoPlayers.this).create();
         alertDialog.setMessage("The Player Who Clicks Faster Wins");

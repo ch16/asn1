@@ -40,16 +40,11 @@ public class StatisticsActivity extends Activity {
     SaveLoadFiles sLFiles = new SaveLoadFiles();
 
 
-    static final String FILENAME = "file.sav";
-    static final String FILENAME2 = "file2.sav";
-    static final String FILENAME3 = "file3.sav";
-    static final String FILENAME4 = "file4.sav";
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
+        sLFiles.loadFromFile(StatisticsActivity.this);
         calculateStatistics();
     }
 
@@ -78,19 +73,18 @@ public class StatisticsActivity extends Activity {
     @Override
     protected void onStart(){
         super.onStart();
-        loadFromFile();
+        sLFiles.loadFromFile(StatisticsActivity.this);
     }
 
     public void calculateStatistics() {
 
-        loadFromFile();
+        sLFiles.loadFromFile(StatisticsActivity.this);
         displayStatistics = (TextView) findViewById(R.id.statistics_text);
         displayStatistics.setMovementMethod(new ScrollingMovementMethod());
 
         sCal.calAll();
         displayStatistics.setText(sCal.getStatString());
 
-        sLFiles.saveInAllFile(StatisticsActivity.this);
     }
 
 
@@ -100,18 +94,17 @@ public class StatisticsActivity extends Activity {
         calculateStatistics();
     }
 
+
     public void sendEmail(View view){
         String[] TO = {""};
         String[] CC = {""};
         Intent emailIntent = new Intent(Intent.ACTION_SEND);
-
         emailIntent.setData(Uri.parse("mailto:"));
         emailIntent.setType("text/plain");
         emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
         emailIntent.putExtra(Intent.EXTRA_CC, CC);
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Your subject");
         emailIntent.putExtra(Intent.EXTRA_TEXT, sCal.getStatString());
-
         try {
         startActivity(Intent.createChooser(emailIntent, "Send mail..."));
         finish();
@@ -120,65 +113,5 @@ public class StatisticsActivity extends Activity {
     }
     }
 
-
-    public void loadFromFile() {
-        //chagne all the string arraylist into double arraylist
-        try {
-            FileInputStream fis = openFileInput(FILENAME);
-            BufferedReader in = new BufferedReader(new InputStreamReader(fis));
-            Gson gson = new Gson();
-            Type arraylistType = new TypeToken<ArrayList<Double>>() {
-            }.getType();
-            StatisticsListController.singleStatistics = gson.fromJson(in, arraylistType);
-            String line = in.readLine();
-            while (line != null) {
-                singleStatistics.add(new Double(line));
-                line = in.readLine();
-            }
-
-            FileInputStream fis2 = openFileInput(FILENAME2);
-            BufferedReader in2 = new BufferedReader(new InputStreamReader(fis2));
-            Gson gson2 = new Gson();
-            Type arraylistType2 = new TypeToken<ArrayList<Integer>>() {
-            }.getType();
-            twoPlayerBuzz = gson2.fromJson(in2, arraylistType2);
-            String line2 = in2.readLine();
-            while (line2 != null) {
-                twoPlayerBuzz.add(new Integer(line2));
-                line2 = in2.readLine();
-            }
-
-            FileInputStream fis3 = openFileInput(FILENAME3);
-            BufferedReader in3 = new BufferedReader(new InputStreamReader(fis3));
-            Gson gson3 = new Gson();
-            Type arraylistType3 = new TypeToken<ArrayList<Integer>>() {}.getType();
-            StatisticsListController.threePlayerBuzz = gson3.fromJson(in3, arraylistType3);
-            String line3 = in3.readLine();
-            while (line3 != null) {
-                StatisticsListController.threePlayerBuzz.add(new Integer(line3));
-                line3 = in3.readLine();
-            }
-
-
-            FileInputStream fis4 = openFileInput(FILENAME4);
-            BufferedReader in4 = new BufferedReader(new InputStreamReader(fis4));
-            Gson gson4 = new Gson();
-            Type arraylistType4 = new TypeToken<ArrayList<Integer>>() {
-            }.getType();
-            StatisticsListController.fourPlayerBuzz = gson4.fromJson(in4, arraylistType4);
-            String line4 = in4.readLine();
-            while (line4 != null) {
-                StatisticsListController.fourPlayerBuzz.add(new Integer(line4));
-                line4 = in4.readLine();
-            }
-
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            StatisticsListController.singleStatistics = new ArrayList<Double>();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            throw new RuntimeException(e);
-        }
-    }
 
 }

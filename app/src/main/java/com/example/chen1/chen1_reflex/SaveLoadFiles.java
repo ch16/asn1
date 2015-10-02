@@ -37,12 +37,6 @@ public class SaveLoadFiles extends Activity{
     static final String FILENAME4 = "file4.sav";
 
 
-     ArrayList asingleStatistics = new ArrayList<Double>();
-     ArrayList atwoPlayerBuzz = new ArrayList<Integer>();
-     ArrayList athreePlayerBuzz = new ArrayList<Integer>();
-     ArrayList afourPlayerBuzz = new ArrayList<Integer>();
-
-
     public void saveInFileSingle(Context context){
 
         try {
@@ -164,64 +158,64 @@ public class SaveLoadFiles extends Activity{
     }
 
 
-    public void loadFromFile() {
+    public void loadFromFile(Context context) {
         //chagne all the string arraylist into double arraylist
         try {
-            FileInputStream fis = openFileInput(FILENAME);
+            FileInputStream fis = context.openFileInput(FILENAME);
             BufferedReader in = new BufferedReader(new InputStreamReader(fis));
             Gson gson = new Gson();
             Type arraylistType = new TypeToken<ArrayList<Double>>() {
             }.getType();
-            asingleStatistics = gson.fromJson(in, arraylistType);
+            StatisticsListController.singleStatistics = gson.fromJson(in, arraylistType);
             String line = in.readLine();
             while (line != null) {
-                asingleStatistics.add(new Double(line));
+                StatisticsListController.singleStatistics.add(new Double(line));
                 line = in.readLine();
             }
 
-            FileInputStream fis2 = openFileInput(FILENAME2);
+            FileInputStream fis2 = context.openFileInput(FILENAME2);
             BufferedReader in2 = new BufferedReader(new InputStreamReader(fis2));
             Gson gson2 = new Gson();
             Type arraylistType2 = new TypeToken<ArrayList<Integer>>() {
             }.getType();
-            atwoPlayerBuzz = gson2.fromJson(in2, arraylistType2);
+            StatisticsListController.twoPlayerBuzz = gson2.fromJson(in2, arraylistType2);
             String line2 = in2.readLine();
             while (line2 != null) {
-               atwoPlayerBuzz.add(new Integer(line2));
+                StatisticsListController.twoPlayerBuzz.add(new Integer(line2));
                 line2 = in2.readLine();
             }
 
-            FileInputStream fis3 = openFileInput(FILENAME3);
+            FileInputStream fis3 = context.openFileInput(FILENAME3);
             BufferedReader in3 = new BufferedReader(new InputStreamReader(fis3));
             Gson gson3 = new Gson();
             Type arraylistType3 = new TypeToken<ArrayList<Integer>>() {}.getType();
-            athreePlayerBuzz = gson3.fromJson(in3, arraylistType3);
+            StatisticsListController.threePlayerBuzz = gson3.fromJson(in3, arraylistType3);
             String line3 = in3.readLine();
             while (line3 != null) {
-                athreePlayerBuzz.add(new Integer(line3));
+                StatisticsListController.threePlayerBuzz.add(new Integer(line3));
                 line3 = in3.readLine();
             }
 
 
-            FileInputStream fis4 = openFileInput(FILENAME4);
+            FileInputStream fis4 = context.openFileInput(FILENAME4);
             BufferedReader in4 = new BufferedReader(new InputStreamReader(fis4));
             Gson gson4 = new Gson();
             Type arraylistType4 = new TypeToken<ArrayList<Integer>>() {
             }.getType();
-            afourPlayerBuzz = gson4.fromJson(in4, arraylistType4);
+            StatisticsListController.fourPlayerBuzz = gson4.fromJson(in4, arraylistType4);
             String line4 = in4.readLine();
             while (line4 != null) {
-                afourPlayerBuzz.add(new Integer(line4));
+                StatisticsListController.fourPlayerBuzz.add(new Integer(line4));
                 line4 = in4.readLine();
             }
 
         } catch (FileNotFoundException e) {
 
             // TODO Auto-generated catch block
-            asingleStatistics = new ArrayList<Double>();
-            atwoPlayerBuzz = new ArrayList<Integer>();
-            athreePlayerBuzz = new ArrayList<Integer>();
-            afourPlayerBuzz = new ArrayList<Integer>();
+            StatisticsListController.singleStatistics = new ArrayList<Double>();
+            StatisticsListController.twoPlayerBuzz = new ArrayList<Integer>();
+            StatisticsListController.threePlayerBuzz = new ArrayList<Integer>();
+            StatisticsListController.fourPlayerBuzz = new ArrayList<Integer>();
         } catch (IOException e) {
             // TODO Auto-generated catch block
             throw new RuntimeException(e);
