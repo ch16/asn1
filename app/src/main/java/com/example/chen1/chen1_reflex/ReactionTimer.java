@@ -27,36 +27,36 @@ public class ReactionTimer extends Activity {
     public ReactionTimer() {
     }
 
-    double startTime;
-    double endTime;
-    double lag;
-    double displayLag;
+        double startTime;
+        double endTime;
+        double lag;
+        double displayLag;
 
-    public void setStartTimeStamp(){
-        startTime = System.currentTimeMillis();
+        public void setStartTimeStamp(){
+            startTime = System.currentTimeMillis();
+        }
+
+
+        public void setEndTimeStamp( ){
+            endTime = System.currentTimeMillis();
+        }
+
+        public void getLag(){
+            lag = endTime - startTime;
+        }
+
+        public double lag(){
+            return lag;
+        }
+
+        public void clearResult(){
+            startTime = 0;
+            endTime = 0;
+            lag = 0;
+
+        }
+        public String lagText(){
+            displayLag = lag/1000;
+            return "the lag is " + displayLag + " seconds" + "\nThe game will start again";
+        }
     }
-
-
-    public void setEndTimeStamp( ){
-        endTime = System.currentTimeMillis();
-    }
-
-    public void getLag(){
-        lag = endTime - startTime;
-    }
-
-    public double lag(){
-        return lag;
-    }
-
-    public void clearResult(){
-        startTime = 0;
-        endTime = 0;
-        lag = 0;
-
-    }
-    public String lagText(){
-        displayLag = lag/1000;
-        return "the lag is " + displayLag + " seconds" + "\nThe game will start again";
-    }
-}

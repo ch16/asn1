@@ -26,7 +26,6 @@ import java.util.ArrayList;
 
 public class FourPlayers extends Activity {
 
-    static final String FILENAME4 = "file4.sav";
     FourPlayerManager fourPlayerManager = new FourPlayerManager();
     SaveLoadFiles saveLoadFiles = new SaveLoadFiles();
 

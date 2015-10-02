@@ -27,6 +27,7 @@ public class TwoPlayerManager extends MultiPlayerManager{
     public TwoPlayerManager() {
     }
 
+    SaveLoadFiles saveLoadFiles = new SaveLoadFiles();
 
     double playerOneTime = Double.POSITIVE_INFINITY;
     double playerTwoTime = Double.POSITIVE_INFINITY;
@@ -64,6 +65,7 @@ public class TwoPlayerManager extends MultiPlayerManager{
                 resultText = resultText + "\nPlayer 1 Wins!";
                 StatisticsListController.getTwoPlayerStatistics().add(1);
             }
+
     }
 
     public void clearResult(){

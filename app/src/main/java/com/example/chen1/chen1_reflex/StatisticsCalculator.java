@@ -66,7 +66,7 @@ public class StatisticsCalculator extends Activity{
 
     ArrayList lastTenList = new ArrayList<Double>();
     ArrayList lastHundredList = new ArrayList<Double>();
-    DecimalFormat formatter = new DecimalFormat("#0.0000");
+    DecimalFormat formatter = new DecimalFormat("#0.000");
 
     public double findMax(ArrayList stastistics, int tenHundred) {
         double max = 0;

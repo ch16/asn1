@@ -27,9 +27,6 @@ import java.util.ArrayList;
 
 public class TwoPlayers extends Activity {
 
-
-    static final String FILENAME2 = "file2.sav";
-
     TwoPlayerManager twoPlayerManager = new TwoPlayerManager();
     SaveLoadFiles saveLoadFiles = new SaveLoadFiles();
 
@@ -96,7 +93,6 @@ public class TwoPlayers extends Activity {
             saveLoadFiles.saveInFile2(TwoPlayers.this);
             goToDialog();
         }
-
     }
 
 

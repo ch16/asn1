@@ -47,7 +47,6 @@ public class SingleUserActivity extends Activity {
     boolean displaying = false;
     ReactionTimer reactionTimer = new ReactionTimer();
     SaveLoadFiles saveLoadFiles = new SaveLoadFiles();
-    static final String FILENAME = "file.sav";
 
 
     @Override
@@ -55,7 +54,7 @@ public class SingleUserActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_user);
         displayedResult = (TextView) findViewById(R.id.reaction_time_display);
-        loadFromSingleFile();
+        saveLoadFiles.loadFromFile(SingleUserActivity.this);
 
         AlertDialog alertDialog = new AlertDialog.Builder(SingleUserActivity.this).create();
         alertDialog.setTitle("Introduction");
@@ -97,7 +96,7 @@ public class SingleUserActivity extends Activity {
     @Override
     protected void onStart() {
         super.onStart();
-        loadFromSingleFile();
+        saveLoadFiles.loadFromFile(SingleUserActivity.this);
     }
 
     public void startGame() {
@@ -157,29 +156,4 @@ public class SingleUserActivity extends Activity {
     }
 
 
-    public void loadFromSingleFile() {
-
-        //chagne all the string arraylist into double arraylist
-        try {
-            FileInputStream fis = openFileInput(FILENAME);
-            BufferedReader in = new BufferedReader(new InputStreamReader(fis));
-            Gson gson = new Gson();
-            Type arraylistType = new TypeToken<ArrayList<Double>>() {
-            }.getType();
-            StatisticsListController.singleStatistics = gson.fromJson(in, arraylistType);
-            String line = in.readLine();
-            while (line != null) {
-                StatisticsListController.singleStatistics.add(new Double(line));
-                line = in.readLine();
-            }
-
-
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            StatisticsListController.singleStatistics = new ArrayList<Double>();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            throw new RuntimeException(e);
-        }
-    }
 }
