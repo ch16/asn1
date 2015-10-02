@@ -234,6 +234,8 @@ public class StatisticsActivity extends Activity {
 
 
 
+
+
     public void saveInFile(){
 
         try {
@@ -306,24 +308,24 @@ public class StatisticsActivity extends Activity {
             FileInputStream fis3 = openFileInput(FILENAME3);
             BufferedReader in3 = new BufferedReader(new InputStreamReader(fis3));
             Gson gson3 = new Gson();
-            Type arraylistType3 = new TypeToken<ArrayList<Integer>>() {
-            }.getType();
-            threePlayerBuzz = gson3.fromJson(in3, arraylistType3);
+            Type arraylistType3 = new TypeToken<ArrayList<Integer>>() {}.getType();
+            StatisticsListController.threePlayerBuzz = gson3.fromJson(in3, arraylistType3);
             String line3 = in3.readLine();
             while (line3 != null) {
-                threePlayerBuzz.add(new Integer(line3));
+                StatisticsListController.threePlayerBuzz.add(new Integer(line3));
                 line3 = in3.readLine();
             }
+
 
             FileInputStream fis4 = openFileInput(FILENAME4);
             BufferedReader in4 = new BufferedReader(new InputStreamReader(fis4));
             Gson gson4 = new Gson();
             Type arraylistType4 = new TypeToken<ArrayList<Integer>>() {
             }.getType();
-            threePlayerBuzz = gson4.fromJson(in4, arraylistType4);
+            StatisticsListController.fourPlayerBuzz = gson4.fromJson(in4, arraylistType4);
             String line4 = in4.readLine();
             while (line4 != null) {
-                threePlayerBuzz.add(new Integer(line4));
+                StatisticsListController.fourPlayerBuzz.add(new Integer(line4));
                 line4 = in4.readLine();
             }
 

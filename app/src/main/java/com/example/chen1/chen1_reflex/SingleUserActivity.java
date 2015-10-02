@@ -53,6 +53,8 @@ public class SingleUserActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_user);
         displayedResult = (TextView) findViewById(R.id.reaction_time_display);
+        loadFromSingleFile();
+
         AlertDialog alertDialog = new AlertDialog.Builder(SingleUserActivity.this).create();
         alertDialog.setTitle("Introduction");
         alertDialog.setCanceledOnTouchOutside(false);
@@ -61,7 +63,6 @@ public class SingleUserActivity extends Activity {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         start = true;
-                        loadFromSingleFile();
                         dialog.dismiss();
                         startGame();
                     }

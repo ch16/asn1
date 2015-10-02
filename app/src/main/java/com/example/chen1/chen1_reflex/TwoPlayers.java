@@ -41,7 +41,8 @@ public class TwoPlayers extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_two_players);
-        loadFromTwoPlayerFile();
+        loadFromFile2();
+
         AlertDialog alertDialog = new AlertDialog.Builder(TwoPlayers.this).create();
         alertDialog.setMessage("The Player Who Clicks Faster Wins");
         alertDialog.setCanceledOnTouchOutside(false);
@@ -151,25 +152,8 @@ public class TwoPlayers extends Activity {
         playerTwoTime = Double.POSITIVE_INFINITY;
     }
 
-    public void saveInTwoPlayerFile(){
 
-        try {
-            FileOutputStream fos2 = openFileOutput(FILENAME2,MODE_PRIVATE);
-            Gson gson2 = new Gson();
-            BufferedWriter out2 = new BufferedWriter(new OutputStreamWriter(fos2));
-            gson2.toJson(StatisticsListController.getTwoPlayerStatistics(), out2);
-            out2.flush();
-            fos2.close();
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void loadFromTwoPlayerFile() {
+    public void loadFromFile2() {
 
         //chagne all the string arraylist into double arraylist
         try {
@@ -178,17 +162,35 @@ public class TwoPlayers extends Activity {
             Gson gson2 = new Gson();
             Type arraylistType2 = new TypeToken<ArrayList<Integer>>() {
             }.getType();
-            StatisticsListController.singleStatistics = gson2.fromJson(in2, arraylistType2);
+            StatisticsListController.twoPlayerBuzz = gson2.fromJson(in2, arraylistType2);
             String line2 = in2.readLine();
             while (line2 != null) {
-                StatisticsListController.singleStatistics.add(new Integer(line2));
+                StatisticsListController.twoPlayerBuzz.add(new Integer(line2));
                 line2 = in2.readLine();
             }
 
 
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
-            StatisticsListController.singleStatistics = new ArrayList<Double>();
+            StatisticsListController.twoPlayerBuzz = new ArrayList<Integer>();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void saveInTwoPlayerFile(){
+
+        try {
+            FileOutputStream fos2 = openFileOutput(FILENAME2, MODE_PRIVATE);
+            Gson gson2 = new Gson();
+            BufferedWriter out2 = new BufferedWriter(new OutputStreamWriter(fos2));
+            gson2.toJson(StatisticsListController.twoPlayerBuzz, out2);
+            out2.flush();
+            fos2.close();
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            throw new RuntimeException(e);
         } catch (IOException e) {
             // TODO Auto-generated catch block
             throw new RuntimeException(e);

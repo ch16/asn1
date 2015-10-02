@@ -24,11 +24,6 @@ public class StatisticsListController{
     static ArrayList threePlayerBuzz = new ArrayList<Integer>();
     static ArrayList fourPlayerBuzz = new ArrayList<Integer>();
 
-    static final String FILENAME = "file.sav";
-    static final String FILENAME2 = "file2.sav";
-    static final String FILENAME3 = "file3.sav";
-    static final String FILENAME4 = "file4.sav";
-
     public static ArrayList<Integer> getTwoPlayerStatistics(){
         return twoPlayerBuzz;
     }
@@ -60,23 +55,6 @@ public class StatisticsListController{
     public static void clearSinlgeStatistics(){
         singleStatistics.clear();
     }
-
-    public static void setSingleStatistics(ArrayList<Double> singleArraylist){
-        singleStatistics = singleArraylist;
-    }
-
-    public static void setTwoPlayerStatistics(ArrayList<Double> arraylist){
-        twoPlayerBuzz = arraylist;
-    }
-
-    public static void setThreePlayerStatistics(ArrayList<Double> arraylist){
-        threePlayerBuzz = arraylist;
-    }
-
-    public static void setFourPlayerStatistics(ArrayList<Double> arraylist){
-        fourPlayerBuzz = arraylist;
-    }
-
 
 
 }

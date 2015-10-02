@@ -11,12 +11,18 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 public class FourPlayers extends Activity {
 
@@ -36,6 +42,7 @@ public class FourPlayers extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_four_players);
 
+        loadFromFile4();
         AlertDialog alertDialog = new AlertDialog.Builder(FourPlayers.this).create();
         alertDialog.setMessage("The Player Who Clicks Faster Wins");
         alertDialog.setCanceledOnTouchOutside(false);
@@ -112,7 +119,6 @@ public class FourPlayers extends Activity {
         }
     }
 
-
     public void waitToCheck() {
         ctimer = new CountDownTimer(200, 1) {
             @Override
@@ -184,15 +190,40 @@ public class FourPlayers extends Activity {
     public void saveInFourPlayerFile(){
 
         try {
-            FileOutputStream fos = openFileOutput(FILENAME4,MODE_PRIVATE);
-            Gson gson = new Gson();
-            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(fos));
-            gson.toJson(StatisticsListController.getFourPlayerStatistics(), out);
-            out.flush();
-            fos.close();
+            FileOutputStream fos4 = openFileOutput(FILENAME4,MODE_PRIVATE);
+            Gson gson4 = new Gson();
+            BufferedWriter out4 = new BufferedWriter(new OutputStreamWriter(fos4));
+            gson4.toJson(StatisticsListController.getFourPlayerStatistics(), out4);
+            out4.flush();
+            fos4.close();
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
             throw new RuntimeException(e);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void loadFromFile4() {
+        //chagne all the string arraylist into double arraylist
+        try {
+            FileInputStream fis4 = openFileInput(FILENAME4);
+            BufferedReader in4 = new BufferedReader(new InputStreamReader(fis4));
+            Gson gson4 = new Gson();
+            Type arraylistType4 = new TypeToken<ArrayList<Integer>>() {
+            }.getType();
+            StatisticsListController.fourPlayerBuzz = gson4.fromJson(in4, arraylistType4);
+            String line4 = in4.readLine();
+            while (line4 != null) {
+                StatisticsListController.fourPlayerBuzz.add(new Integer(line4));
+                line4 = in4.readLine();
+            }
+
+
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            StatisticsListController.fourPlayerBuzz = new ArrayList<Integer>();
         } catch (IOException e) {
             // TODO Auto-generated catch block
             throw new RuntimeException(e);
