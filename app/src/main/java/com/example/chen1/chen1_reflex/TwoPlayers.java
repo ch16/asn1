@@ -76,7 +76,7 @@ public class TwoPlayers extends Activity {
     @Override
     protected void onStart(){
         super.onStart();
-        loadFromFile2();
+        saveLoadFiles.loadFromFile(TwoPlayers.this);
     }
 
 
@@ -112,34 +112,6 @@ public class TwoPlayers extends Activity {
                     }
                 });
         alertDialog.show();
-    }
-
-
-
-    public void loadFromFile2() {
-
-        //chagne all the string arraylist into double arraylist
-        try {
-            FileInputStream fis2 = openFileInput(FILENAME2);
-            BufferedReader in2 = new BufferedReader(new InputStreamReader(fis2));
-            Gson gson2 = new Gson();
-            Type arraylistType2 = new TypeToken<ArrayList<Integer>>() {
-            }.getType();
-            StatisticsListController.twoPlayerBuzz = gson2.fromJson(in2, arraylistType2);
-            String line2 = in2.readLine();
-            while (line2 != null) {
-                StatisticsListController.twoPlayerBuzz.add(new Integer(line2));
-                line2 = in2.readLine();
-            }
-
-
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            StatisticsListController.twoPlayerBuzz = new ArrayList<Integer>();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            throw new RuntimeException(e);
-        }
     }
 
 

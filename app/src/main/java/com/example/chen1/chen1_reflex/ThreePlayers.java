@@ -36,7 +36,7 @@ public class ThreePlayers extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_three_players);
-        loadFromFile3();
+        saveLoadFiles.loadFromFile(ThreePlayers.this);
 
         AlertDialog alertDialog = new AlertDialog.Builder(ThreePlayers.this).create();
         alertDialog.setMessage("The Player Who Clicks Faster Wins");
@@ -76,7 +76,7 @@ public class ThreePlayers extends Activity {
     @Override
     protected void onStart(){
         super.onStart();
-        loadFromFile3();
+        saveLoadFiles.loadFromFile(ThreePlayers.this);
     }
 
 
@@ -123,29 +123,4 @@ public class ThreePlayers extends Activity {
         alertDialog.show();
     }
 
-
-    public void loadFromFile3() {
-        //chagne all the string arraylist into double arraylist
-        try {
-            FileInputStream fis3 = openFileInput(FILENAME3);
-            BufferedReader in3 = new BufferedReader(new InputStreamReader(fis3));
-            Gson gson3 = new Gson();
-            Type arraylistType3 = new TypeToken<ArrayList<Integer>>() {
-            }.getType();
-            StatisticsListController.threePlayerBuzz = gson3.fromJson(in3, arraylistType3);
-            String line3 = in3.readLine();
-            while (line3 != null) {
-                StatisticsListController.threePlayerBuzz.add(new Integer(line3));
-                line3 = in3.readLine();
-            }
-
-
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            StatisticsListController.threePlayerBuzz = new ArrayList<Integer>();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            throw new RuntimeException(e);
-        }
-    }
 }

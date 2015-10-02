@@ -35,7 +35,7 @@ public class FourPlayers extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_four_players);
 
-        loadFromFile4();
+        saveLoadFiles.loadFromFile(FourPlayers.this);
         AlertDialog alertDialog = new AlertDialog.Builder(FourPlayers.this).create();
         alertDialog.setMessage("The Player Who Clicks Faster Wins");
         alertDialog.setCanceledOnTouchOutside(false);
@@ -74,7 +74,7 @@ public class FourPlayers extends Activity {
     @Override
     protected void onStart(){
         super.onStart();
-        loadFromFile4();
+        saveLoadFiles.loadFromFile(FourPlayers.this);
     }
 
     public void playerOne(View view){
@@ -128,32 +128,6 @@ public class FourPlayers extends Activity {
                     }
                 });
         alertDialog.show();
-    }
-
-
-    public void loadFromFile4() {
-        //chagne all the string arraylist into double arraylist
-        try {
-            FileInputStream fis4 = openFileInput(FILENAME4);
-            BufferedReader in4 = new BufferedReader(new InputStreamReader(fis4));
-            Gson gson4 = new Gson();
-            Type arraylistType4 = new TypeToken<ArrayList<Integer>>() {
-            }.getType();
-            StatisticsListController.fourPlayerBuzz = gson4.fromJson(in4, arraylistType4);
-            String line4 = in4.readLine();
-            while (line4 != null) {
-                StatisticsListController.fourPlayerBuzz.add(new Integer(line4));
-                line4 = in4.readLine();
-            }
-
-
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            StatisticsListController.fourPlayerBuzz = new ArrayList<Integer>();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            throw new RuntimeException(e);
-        }
     }
 
 }
