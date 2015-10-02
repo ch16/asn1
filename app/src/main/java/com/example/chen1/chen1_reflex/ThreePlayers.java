@@ -88,7 +88,7 @@ public class ThreePlayers extends Activity {
             clickedTimes++;
             playerOneTime = System.currentTimeMillis();
             if (clickedTimes == 1) {
-                waitToCheck();
+                checkResult();
             }
         }
     }
@@ -98,7 +98,7 @@ public class ThreePlayers extends Activity {
             clickedTimes++;
             playerTwoTime = System.currentTimeMillis();
             if (clickedTimes == 1) {
-                waitToCheck();
+                checkResult();
             }
         }
     }
@@ -108,23 +108,11 @@ public class ThreePlayers extends Activity {
             clickedTimes++;
             playerThreeTime = System.currentTimeMillis();
             if (clickedTimes == 1) {
-                waitToCheck();
+                checkResult();
             }
         }
     }
 
-    public void waitToCheck() {
-        ctimer = new CountDownTimer(200, 1) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-            }
-
-            @Override
-            public void onFinish() {
-                checkResult();
-            }
-        }.start();
-    }
 
     public void checkResult() {
         displaying = true;
