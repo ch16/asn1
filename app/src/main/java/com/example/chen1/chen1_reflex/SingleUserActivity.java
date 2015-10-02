@@ -46,7 +46,9 @@ public class SingleUserActivity extends Activity {
     int randomTime;
     boolean displaying = false;
     ReactionTimer reactionTimer = new ReactionTimer();
+    SaveLoadFiles saveLoadFiles = new SaveLoadFiles();
     static final String FILENAME = "file.sav";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +95,7 @@ public class SingleUserActivity extends Activity {
     }
 
     @Override
-    protected void onStart(){
+    protected void onStart() {
         super.onStart();
         loadFromSingleFile();
     }
@@ -147,7 +149,7 @@ public class SingleUserActivity extends Activity {
             reactionTimer.setEndTimeStamp();
             reactionTimer.getLag();
             StatisticsListController.singleStatistics.add(reactionTimer.lag());
-            saveInSingleFile();
+            saveLoadFiles.saveInFileSingle(SingleUserActivity.this);
             startAgain();
         } else if (start == false) {
             return;
@@ -180,23 +182,4 @@ public class SingleUserActivity extends Activity {
             throw new RuntimeException(e);
         }
     }
-
-    public void saveInSingleFile() {
-
-        try {
-            FileOutputStream fos = openFileOutput(FILENAME, MODE_PRIVATE);
-            Gson gson = new Gson();
-            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(fos));
-            gson.toJson(StatisticsListController.singleStatistics, out);
-            out.flush();
-            fos.close();
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            throw new RuntimeException(e);
-        }
-    }
-
 }

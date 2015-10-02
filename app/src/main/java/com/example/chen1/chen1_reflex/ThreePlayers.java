@@ -27,14 +27,10 @@ import java.util.ArrayList;
 
 public class ThreePlayers extends Activity {
 
-    double playerOneTime = Double.POSITIVE_INFINITY;
-    double playerTwoTime = Double.POSITIVE_INFINITY;
-    double playerThreeTime = Double.POSITIVE_INFINITY;
-
-    CountDownTimer ctimer;
-    boolean displaying = true;
-    int clickedTimes = 0;
     static final String FILENAME3 = "file3.sav";
+
+    ThreePlayerManager threePlayerManager = new ThreePlayerManager();
+    SaveLoadFiles saveLoadFiles = new SaveLoadFiles();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +44,7 @@ public class ThreePlayers extends Activity {
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Start ",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        displaying = false;
+                        threePlayerManager.setDisplaying(false);
                         dialog.dismiss();
                     }
                 });
@@ -83,102 +79,50 @@ public class ThreePlayers extends Activity {
         loadFromFile3();
     }
 
-    public void playerOne(View view) {
-        if (displaying == false) {
-            clickedTimes++;
-            playerOneTime = System.currentTimeMillis();
-            if (clickedTimes == 1) {
-                checkResult();
-            }
+
+    public void playerOne(View view){
+        threePlayerManager.notePlayerOne();
+        if (threePlayerManager.getClickedTimes() == 1) {
+            threePlayerManager.checkResult();
+            saveLoadFiles.saveInFile3(ThreePlayers.this);
+            goToDialog();
         }
     }
 
-    public void playerTwo(View view) {
-        if (displaying == false) {
-            clickedTimes++;
-            playerTwoTime = System.currentTimeMillis();
-            if (clickedTimes == 1) {
-                checkResult();
-            }
+    public void playerTwo(View view){
+        threePlayerManager.notePlayerTwo();
+        if (threePlayerManager.getClickedTimes() == 1) {
+            threePlayerManager.checkResult();
+            saveLoadFiles.saveInFile3(ThreePlayers.this);
+            goToDialog();
         }
+
     }
 
-    public void playerThree(View view) {
-        if (displaying == false) {
-            clickedTimes++;
-            playerThreeTime = System.currentTimeMillis();
-            if (clickedTimes == 1) {
-                checkResult();
-            }
+    public void playerThree(View view){
+        threePlayerManager.notePlayerThree();
+        if (threePlayerManager.getClickedTimes() == 1) {
+            threePlayerManager.checkResult();
+            saveLoadFiles.saveInFile3(ThreePlayers.this);
+            goToDialog();
         }
+
     }
 
-
-    public void checkResult() {
-        displaying = true;
-        String resultText = "";
-        if (playerOneTime != Double.POSITIVE_INFINITY) {
-            resultText = resultText + "Player 1 Clicked\n";
-        }
-        if (playerTwoTime != Double.POSITIVE_INFINITY) {
-            resultText = resultText + "Player 2 Clicked\n";
-        }
-        if (playerThreeTime != Double.POSITIVE_INFINITY) {
-            resultText = resultText + "Player 3 Clicked\n";
-        }
-
-        if (playerOneTime > playerTwoTime && playerThreeTime > playerTwoTime) {
-            resultText = resultText + "\nPlayer 2 Wins!";
-            StatisticsListController.getThreePlayerStatistics().add(2);
-        } else if (playerTwoTime > playerOneTime && playerThreeTime > playerOneTime) {
-            resultText = resultText + "\nPlayer 1 Wins!";
-            StatisticsListController.getThreePlayerStatistics().add(1);
-        } else if (playerOneTime > playerThreeTime && playerTwoTime > playerThreeTime) {
-            resultText = resultText + "\nPlayer 3 Wins!";
-            StatisticsListController.getThreePlayerStatistics().add(3);
-        }
-        saveInThreePlayerFile();
-
+    public void goToDialog(){
         AlertDialog alertDialog = new AlertDialog.Builder(ThreePlayers.this).create();
-        alertDialog.setMessage(resultText);
+        alertDialog.setMessage(threePlayerManager.getText());
         alertDialog.setCanceledOnTouchOutside(false);
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Start Again",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        clearResult();
+                        threePlayerManager.clearResult();
                         dialog.dismiss();
                     }
                 });
         alertDialog.show();
-
     }
 
-    public void clearResult() {
-
-        displaying = false;
-        clickedTimes = 0;
-        playerOneTime = Double.POSITIVE_INFINITY;
-        playerTwoTime = Double.POSITIVE_INFINITY;
-        playerThreeTime = Double.POSITIVE_INFINITY;
-    }
-
-    public void saveInThreePlayerFile(){
-
-        try {
-            FileOutputStream fos3 = openFileOutput(FILENAME3, MODE_PRIVATE);
-            Gson gson3 = new Gson();
-            BufferedWriter out3 = new BufferedWriter(new OutputStreamWriter(fos3));
-            gson3.toJson(StatisticsListController.threePlayerBuzz, out3);
-            out3.flush();
-            fos3.close();
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            throw new RuntimeException(e);
-        }
-    }
 
     public void loadFromFile3() {
         //chagne all the string arraylist into double arraylist

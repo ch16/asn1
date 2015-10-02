@@ -26,16 +26,9 @@ import java.util.ArrayList;
 
 public class FourPlayers extends Activity {
 
-    double playerOneTime = Double.POSITIVE_INFINITY;
-    double playerTwoTime = Double.POSITIVE_INFINITY;
-    double playerThreeTime = Double.POSITIVE_INFINITY;
-    double playerFourTime = Double.POSITIVE_INFINITY;
-
-    CountDownTimer ctimer;
-    boolean displaying = true;
-    int clickedTimes = 0;
     static final String FILENAME4 = "file4.sav";
-
+    FourPlayerManager fourPlayerManager = new FourPlayerManager();
+    SaveLoadFiles saveLoadFiles = new SaveLoadFiles();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +42,7 @@ public class FourPlayers extends Activity {
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Start ",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        displaying = false;
+                        fourPlayerManager.setDisplaying(false);
                         dialog.dismiss();
                     }
                 });
@@ -85,132 +78,58 @@ public class FourPlayers extends Activity {
     }
 
     public void playerOne(View view){
-        if (displaying == false){
-            clickedTimes ++;
-            playerOneTime = System.currentTimeMillis();
-            if (clickedTimes == 1) {
-                checkResult();
-            }
+        fourPlayerManager.notePlayerOne();
+        if (fourPlayerManager.getClickedTimes() == 1) {
+            fourPlayerManager.checkResult();
+            saveLoadFiles.saveInFile4(FourPlayers.this);
+            goToDialog();
         }
     }
 
     public void playerTwo(View view){
-        if (displaying == false) {
-            clickedTimes++;
-            playerTwoTime = System.currentTimeMillis();
-            if (clickedTimes == 1) {
-                checkResult();
-            }
+        fourPlayerManager.notePlayerTwo();
+        if (fourPlayerManager.getClickedTimes() == 1) {
+            fourPlayerManager.checkResult();
+            saveLoadFiles.saveInFile4(FourPlayers.this);
+            goToDialog();
         }
+
     }
 
     public void playerThree(View view){
-        if (displaying == false) {
-            clickedTimes++;
-            playerThreeTime = System.currentTimeMillis();
-            if (clickedTimes == 1) {
-                checkResult();
-            }
+        fourPlayerManager.notePlayerThree();
+        if (fourPlayerManager.getClickedTimes() == 1) {
+            fourPlayerManager.checkResult();
+            saveLoadFiles.saveInFile4(FourPlayers.this);
+            goToDialog();
         }
     }
 
     public void playerFour(View view){
-        if(displaying == false) {
-            clickedTimes++;
-            playerFourTime = System.currentTimeMillis();
-            if (clickedTimes == 1) {
-                checkResult();
-            }
+        fourPlayerManager.notePlayerFour();
+        if (fourPlayerManager.getClickedTimes() == 1) {
+            fourPlayerManager.checkResult();
+            saveLoadFiles.saveInFile4(FourPlayers.this);
+            goToDialog();
         }
+
     }
 
-    /*
-    public void waitToCheck() {
-        ctimer = new CountDownTimer(200, 1) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-            }
 
-            @Override
-            public void onFinish() {
-                checkResult();
-            }
-        }.start();
-    }
-    */
-
-    public void checkResult() {
-        displaying = true;
-        String resultText = "";
-        if (playerOneTime != Double.POSITIVE_INFINITY) {
-            resultText = resultText + "Player 1 clicked\n";
-        }
-        if (playerTwoTime != Double.POSITIVE_INFINITY) {
-            resultText = resultText + "Player 2 clicked\n";
-        }
-        if (playerThreeTime != Double.POSITIVE_INFINITY) {
-            resultText = resultText + "Player 3 clicked\n";
-        }
-        if (playerFourTime != Double.POSITIVE_INFINITY) {
-            resultText = resultText + "Player 4 clicked\n";
-        }
-
-        if (playerOneTime > playerTwoTime && playerThreeTime > playerTwoTime && playerFourTime > playerTwoTime) {
-            resultText = resultText + "\nPlayer 2 Wins!";
-            StatisticsListController.getFourPlayerStatistics().add(2);
-        } else if (playerTwoTime > playerOneTime && playerThreeTime > playerOneTime && playerFourTime> playerOneTime) {
-            resultText = resultText + "\nPlayer 1 Wins!";
-            StatisticsListController.getFourPlayerStatistics().add(1);
-        } else if (playerOneTime > playerThreeTime && playerTwoTime > playerThreeTime && playerFourTime > playerThreeTime) {
-            resultText = resultText + "\nPlayer 3 Wins!";
-            StatisticsListController.getFourPlayerStatistics().add(3);
-        }else if (playerOneTime>playerFourTime && playerTwoTime> playerFourTime && playerThreeTime>playerFourTime){
-            resultText = resultText + "\nPlayer 4 Wins!";
-            StatisticsListController.getFourPlayerStatistics().add(4);
-        }
-        saveInFourPlayerFile();
-
+    public void goToDialog(){
         AlertDialog alertDialog = new AlertDialog.Builder(FourPlayers.this).create();
-        alertDialog.setMessage(resultText);
+        alertDialog.setMessage(fourPlayerManager.getText());
         alertDialog.setCanceledOnTouchOutside(false);
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Start Again",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        clearResult();
+                        fourPlayerManager.clearResult();
                         dialog.dismiss();
                     }
                 });
         alertDialog.show();
     }
 
-    public void clearResult() {
-
-        displaying = false;
-        clickedTimes = 0;
-        playerOneTime = Double.POSITIVE_INFINITY;
-        playerTwoTime = Double.POSITIVE_INFINITY;
-        playerThreeTime = Double.POSITIVE_INFINITY;
-        playerFourTime = Double.POSITIVE_INFINITY;
-
-    }
-
-    public void saveInFourPlayerFile(){
-
-        try {
-            FileOutputStream fos4 = openFileOutput(FILENAME4,MODE_PRIVATE);
-            Gson gson4 = new Gson();
-            BufferedWriter out4 = new BufferedWriter(new OutputStreamWriter(fos4));
-            gson4.toJson(StatisticsListController.getFourPlayerStatistics(), out4);
-            out4.flush();
-            fos4.close();
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            throw new RuntimeException(e);
-        }
-    }
 
     public void loadFromFile4() {
         //chagne all the string arraylist into double arraylist

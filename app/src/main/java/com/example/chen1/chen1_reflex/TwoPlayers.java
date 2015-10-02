@@ -27,29 +27,25 @@ import java.util.ArrayList;
 
 public class TwoPlayers extends Activity {
 
-    double playerOneTime = Double.POSITIVE_INFINITY;
-    double playerTwoTime = Double.POSITIVE_INFINITY;
-    StatisticsActivity a = new StatisticsActivity();
 
-    CountDownTimer ctimer;
-    boolean displaying = true;
-    int clickedTimes = 0;
     static final String FILENAME2 = "file2.sav";
 
+    TwoPlayerManager twoPlayerManager = new TwoPlayerManager();
+    SaveLoadFiles saveLoadFiles = new SaveLoadFiles();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_two_players);
-
         loadFromFile2();
+
         AlertDialog alertDialog = new AlertDialog.Builder(TwoPlayers.this).create();
         alertDialog.setMessage("The Player Who Clicks Faster Wins");
         alertDialog.setCanceledOnTouchOutside(false);
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Start ",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        displaying = false;
+                        twoPlayerManager.setDisplaying(false);
                         dialog.dismiss();
                     }
                 });
@@ -74,7 +70,6 @@ public class TwoPlayers extends Activity {
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -84,67 +79,41 @@ public class TwoPlayers extends Activity {
         loadFromFile2();
     }
 
+
     public void playerOne(View view){
-        if (displaying == false){
-            clickedTimes ++;
-            playerOneTime = System.currentTimeMillis();
-            if (clickedTimes == 1) {
-                checkResult();
-            }
+        twoPlayerManager.notePlayerOne();
+        if (twoPlayerManager.getClickedTimes() == 1) {
+            twoPlayerManager.checkResult();
+            saveLoadFiles.saveInFile2(TwoPlayers.this);
+            goToDialog();
         }
     }
 
     public void playerTwo(View view){
-        if (displaying == false){
-            clickedTimes ++;
-            playerTwoTime = System.currentTimeMillis();
-            if (clickedTimes == 1) {
-                checkResult();
-            }
+        twoPlayerManager.notePlayerTwo();
+        if (twoPlayerManager.getClickedTimes() == 1) {
+            twoPlayerManager.checkResult();
+            saveLoadFiles.saveInFile2(TwoPlayers.this);
+            goToDialog();
         }
+
     }
 
 
-    public void checkResult(){
-        displaying = true;
-        String resultText = "";
-        if (playerOneTime != Double.POSITIVE_INFINITY){
-            resultText = resultText + "Player 1 Clicked\n";
-        }
-        if (playerTwoTime != Double.POSITIVE_INFINITY){
-            resultText = resultText + "Player 2 Clicked\n";
-        }
-
-        if (playerOneTime>playerTwoTime){
-            resultText = resultText + "\nPlayer 2 Wins!";
-            StatisticsListController.getTwoPlayerStatistics().add(2);
-            saveInTwoPlayerFile();
-        }else if (playerTwoTime>playerOneTime){
-            resultText = resultText + "\nPlayer 1 Wins!";
-            StatisticsListController.getTwoPlayerStatistics().add(1);
-            saveInTwoPlayerFile();
-        }
-
-        AlertDialog alertDialog = new AlertDialog.Builder(TwoPlayers.this).create();
-        alertDialog.setMessage(resultText);
+    public void goToDialog(){
+    AlertDialog alertDialog = new AlertDialog.Builder(TwoPlayers.this).create();
+        alertDialog.setMessage(twoPlayerManager.getText());
         alertDialog.setCanceledOnTouchOutside(false);
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Start Again",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        clearResult();
+                        twoPlayerManager.clearResult();
                         dialog.dismiss();
                     }
                 });
         alertDialog.show();
     }
 
-    public void clearResult(){
-
-        displaying = false;
-        clickedTimes = 0;
-        playerOneTime = Double.POSITIVE_INFINITY;
-        playerTwoTime = Double.POSITIVE_INFINITY;
-    }
 
 
     public void loadFromFile2() {
@@ -167,24 +136,6 @@ public class TwoPlayers extends Activity {
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
             StatisticsListController.twoPlayerBuzz = new ArrayList<Integer>();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void saveInTwoPlayerFile(){
-
-        try {
-            FileOutputStream fos2 = openFileOutput(FILENAME2, MODE_PRIVATE);
-            Gson gson2 = new Gson();
-            BufferedWriter out2 = new BufferedWriter(new OutputStreamWriter(fos2));
-            gson2.toJson(StatisticsListController.twoPlayerBuzz, out2);
-            out2.flush();
-            fos2.close();
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            throw new RuntimeException(e);
         } catch (IOException e) {
             // TODO Auto-generated catch block
             throw new RuntimeException(e);

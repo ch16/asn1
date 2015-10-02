@@ -23,5 +23,5 @@
     <string name="four_player_two">Player 2</string>
     <string name="four_player_three">Player 3</string>
     <string name="four_player_four">Player 4</string>
-    <string name="intro">Single User Mode:\nWhen the wait is over the player click as soon as possible</string>
+    <string name="intro">Single User Mode:\nWhen the wait is over the player click as soon as possible\nGameshow Buzz Mode:\nThe player who clicks the fastest wins</string>
 </resources>
