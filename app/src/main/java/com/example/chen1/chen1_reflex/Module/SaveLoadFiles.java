@@ -1,4 +1,4 @@
-package com.example.chen1.chen1_reflex;
+package com.example.chen1.chen1_reflex.Module;
 
 import android.app.Activity;
 import android.content.Context;
@@ -16,13 +16,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-
-import static com.example.chen1.chen1_reflex.StatisticsListController.getFourPlayerStatistics;
-import static com.example.chen1.chen1_reflex.StatisticsListController.getSingleStatistics;
-import static com.example.chen1.chen1_reflex.StatisticsListController.getThreePlayerStatistics;
-import static com.example.chen1.chen1_reflex.StatisticsListController.getTwoPlayerStatistics;
-import static com.example.chen1.chen1_reflex.StatisticsListController.singleStatistics;
-import static com.example.chen1.chen1_reflex.StatisticsListController.twoPlayerBuzz;
 
 /**
  * Created by chen1 on 10/2/15.
@@ -43,7 +36,7 @@ public class SaveLoadFiles extends Activity{
             FileOutputStream fos = context.openFileOutput(FILENAME, MODE_PRIVATE);
             Gson gson = new Gson();
             BufferedWriter out = new BufferedWriter(new OutputStreamWriter(fos));
-            gson.toJson(getSingleStatistics(), out);
+            gson.toJson(StatisticsListStorage.getSingleStatistics(), out);
             out.flush();
             fos.close();
 
@@ -62,7 +55,7 @@ public class SaveLoadFiles extends Activity{
             FileOutputStream fos2 = context.openFileOutput(FILENAME2, MODE_PRIVATE);
             Gson gson2 = new Gson();
             BufferedWriter out2 = new BufferedWriter(new OutputStreamWriter(fos2));
-            gson2.toJson(getTwoPlayerStatistics(), out2);
+            gson2.toJson(StatisticsListStorage.getTwoPlayerStatistics(), out2);
             out2.flush();
             fos2.close();
 
@@ -81,7 +74,7 @@ public class SaveLoadFiles extends Activity{
             FileOutputStream fos3 = context.openFileOutput(FILENAME3, MODE_PRIVATE);
             Gson gson3 = new Gson();
             BufferedWriter out3 = new BufferedWriter(new OutputStreamWriter(fos3));
-            gson3.toJson(getThreePlayerStatistics(), out3);
+            gson3.toJson(StatisticsListStorage.getThreePlayerStatistics(), out3);
             out3.flush();
             fos3.close();
         } catch (FileNotFoundException e) {
@@ -99,7 +92,7 @@ public class SaveLoadFiles extends Activity{
             FileOutputStream fos4 = context.openFileOutput(FILENAME4, MODE_PRIVATE);
             Gson gson4 = new Gson();
             BufferedWriter out4 = new BufferedWriter(new OutputStreamWriter(fos4));
-            gson4.toJson(getFourPlayerStatistics(), out4);
+            gson4.toJson(StatisticsListStorage.getFourPlayerStatistics(), out4);
 
             out4.flush();
 
@@ -133,10 +126,10 @@ public class SaveLoadFiles extends Activity{
             BufferedWriter out3 = new BufferedWriter(new OutputStreamWriter(fos3));
             BufferedWriter out4 = new BufferedWriter(new OutputStreamWriter(fos4));
 
-            gson.toJson(getSingleStatistics(), out);
-            gson2.toJson(getTwoPlayerStatistics(), out2);
-            gson3.toJson(getThreePlayerStatistics(), out3);
-            gson4.toJson(getFourPlayerStatistics(), out4);
+            gson.toJson(StatisticsListStorage.getSingleStatistics(), out);
+            gson2.toJson(StatisticsListStorage.getTwoPlayerStatistics(), out2);
+            gson3.toJson(StatisticsListStorage.getThreePlayerStatistics(), out3);
+            gson4.toJson(StatisticsListStorage.getFourPlayerStatistics(), out4);
 
             out.flush();
             out2.flush();
@@ -166,10 +159,10 @@ public class SaveLoadFiles extends Activity{
             Gson gson = new Gson();
             Type arraylistType = new TypeToken<ArrayList<Double>>() {
             }.getType();
-            StatisticsListController.singleStatistics = gson.fromJson(in, arraylistType);
+            StatisticsListStorage.singleStatistics = gson.fromJson(in, arraylistType);
             String line = in.readLine();
             while (line != null) {
-                StatisticsListController.singleStatistics.add(new Double(line));
+                StatisticsListStorage.singleStatistics.add(new Double(line));
                 line = in.readLine();
             }
 
@@ -178,10 +171,10 @@ public class SaveLoadFiles extends Activity{
             Gson gson2 = new Gson();
             Type arraylistType2 = new TypeToken<ArrayList<Integer>>() {
             }.getType();
-            StatisticsListController.twoPlayerBuzz = gson2.fromJson(in2, arraylistType2);
+            StatisticsListStorage.twoPlayerBuzz = gson2.fromJson(in2, arraylistType2);
             String line2 = in2.readLine();
             while (line2 != null) {
-                StatisticsListController.twoPlayerBuzz.add(new Integer(line2));
+                StatisticsListStorage.twoPlayerBuzz.add(new Integer(line2));
                 line2 = in2.readLine();
             }
 
@@ -189,10 +182,10 @@ public class SaveLoadFiles extends Activity{
             BufferedReader in3 = new BufferedReader(new InputStreamReader(fis3));
             Gson gson3 = new Gson();
             Type arraylistType3 = new TypeToken<ArrayList<Integer>>() {}.getType();
-            StatisticsListController.threePlayerBuzz = gson3.fromJson(in3, arraylistType3);
+            StatisticsListStorage.threePlayerBuzz = gson3.fromJson(in3, arraylistType3);
             String line3 = in3.readLine();
             while (line3 != null) {
-                StatisticsListController.threePlayerBuzz.add(new Integer(line3));
+                StatisticsListStorage.threePlayerBuzz.add(new Integer(line3));
                 line3 = in3.readLine();
             }
 
@@ -202,20 +195,20 @@ public class SaveLoadFiles extends Activity{
             Gson gson4 = new Gson();
             Type arraylistType4 = new TypeToken<ArrayList<Integer>>() {
             }.getType();
-            StatisticsListController.fourPlayerBuzz = gson4.fromJson(in4, arraylistType4);
+            StatisticsListStorage.fourPlayerBuzz = gson4.fromJson(in4, arraylistType4);
             String line4 = in4.readLine();
             while (line4 != null) {
-                StatisticsListController.fourPlayerBuzz.add(new Integer(line4));
+                StatisticsListStorage.fourPlayerBuzz.add(new Integer(line4));
                 line4 = in4.readLine();
             }
 
         } catch (FileNotFoundException e) {
 
             // TODO Auto-generated catch block
-            StatisticsListController.singleStatistics = new ArrayList<Double>();
-            StatisticsListController.twoPlayerBuzz = new ArrayList<Integer>();
-            StatisticsListController.threePlayerBuzz = new ArrayList<Integer>();
-            StatisticsListController.fourPlayerBuzz = new ArrayList<Integer>();
+            StatisticsListStorage.singleStatistics = new ArrayList<Double>();
+            StatisticsListStorage.twoPlayerBuzz = new ArrayList<Integer>();
+            StatisticsListStorage.threePlayerBuzz = new ArrayList<Integer>();
+            StatisticsListStorage.fourPlayerBuzz = new ArrayList<Integer>();
         } catch (IOException e) {
             // TODO Auto-generated catch block
             throw new RuntimeException(e);

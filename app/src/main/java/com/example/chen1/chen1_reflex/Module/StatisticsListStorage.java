@@ -1,4 +1,4 @@
-package com.example.chen1.chen1_reflex;
+package com.example.chen1.chen1_reflex.Module;
 
 import android.app.Activity;
 import android.widget.ArrayAdapter;
@@ -17,7 +17,7 @@ import java.util.ArrayList;
 /**
  * Created by chen1 on 9/28/15.
  */
-public class StatisticsListController{
+public class StatisticsListStorage {
 
     static ArrayList singleStatistics = new ArrayList<Double>();
     static ArrayList twoPlayerBuzz = new ArrayList<Integer>();

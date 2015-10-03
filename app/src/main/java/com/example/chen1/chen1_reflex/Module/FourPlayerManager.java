@@ -1,4 +1,4 @@
-package com.example.chen1.chen1_reflex;
+package com.example.chen1.chen1_reflex.Module;
 
 /**
  * Created by chen1 on 10/1/15.
@@ -65,16 +65,16 @@ public class FourPlayerManager extends MultiPlayerManager{
 
         if (playerOneTime > playerTwoTime && playerThreeTime > playerTwoTime && playerFourTime > playerTwoTime) {
             resultText = resultText + "\nPlayer 2 Wins!";
-            StatisticsListController.getFourPlayerStatistics().add(2);
+            StatisticsListStorage.getFourPlayerStatistics().add(2);
         } else if (playerTwoTime > playerOneTime && playerThreeTime > playerOneTime && playerFourTime> playerOneTime) {
             resultText = resultText + "\nPlayer 1 Wins!";
-            StatisticsListController.getFourPlayerStatistics().add(1);
+            StatisticsListStorage.getFourPlayerStatistics().add(1);
         } else if (playerOneTime > playerThreeTime && playerTwoTime > playerThreeTime && playerFourTime > playerThreeTime) {
             resultText = resultText + "\nPlayer 3 Wins!";
-            StatisticsListController.getFourPlayerStatistics().add(3);
+            StatisticsListStorage.getFourPlayerStatistics().add(3);
         }else if (playerOneTime>playerFourTime && playerTwoTime> playerFourTime && playerThreeTime>playerFourTime){
             resultText = resultText + "\nPlayer 4 Wins!";
-            StatisticsListController.getFourPlayerStatistics().add(4);
+            StatisticsListStorage.getFourPlayerStatistics().add(4);
         }
     }
 

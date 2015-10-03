@@ -1,4 +1,4 @@
-package com.example.chen1.chen1_reflex;
+package com.example.chen1.chen1_reflex.Module;
 
 /**
  * Created by chen1 on 10/1/15.
@@ -53,13 +53,13 @@ public class ThreePlayerManager extends MultiPlayerManager{
 
         if (playerOneTime > playerTwoTime && playerThreeTime > playerTwoTime) {
             resultText = resultText + "\nPlayer 2 Wins!";
-            StatisticsListController.getThreePlayerStatistics().add(2);
+            StatisticsListStorage.getThreePlayerStatistics().add(2);
         } else if (playerTwoTime > playerOneTime && playerThreeTime > playerOneTime) {
             resultText = resultText + "\nPlayer 1 Wins!";
-            StatisticsListController.getThreePlayerStatistics().add(1);
+            StatisticsListStorage.getThreePlayerStatistics().add(1);
         } else if (playerOneTime > playerThreeTime && playerTwoTime > playerThreeTime) {
             resultText = resultText + "\nPlayer 3 Wins!";
-            StatisticsListController.getThreePlayerStatistics().add(3);
+            StatisticsListStorage.getThreePlayerStatistics().add(3);
         }
     }
 

@@ -1,4 +1,4 @@
-package com.example.chen1.chen1_reflex;
+package com.example.chen1.chen1_reflex.View;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
+import com.example.chen1.chen1_reflex.R;
 
 public class MainActivity extends ActionBarActivity {
 

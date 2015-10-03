@@ -8,7 +8,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainActivity"
+            android:name=".View.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,23 +17,23 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SingleUserActivity"
+            android:name=".View.SingleUserActivity"
             android:label="@string/title_activity_single_user" >
         </activity>
         <activity
-            android:name=".StatisticsActivity"
+            android:name=".View.StatisticsActivity"
             android:label="@string/title_activity_statistics" >
         </activity>
         <activity
-            android:name=".TwoPlayers"
+            android:name=".View.TwoPlayers"
             android:label="@string/title_activity_two_players" >
         </activity>
         <activity
-            android:name=".ThreePlayers"
+            android:name=".View.ThreePlayers"
             android:label="@string/title_activity_three_players" >
         </activity>
         <activity
-            android:name=".FourPlayers"
+            android:name=".View.FourPlayers"
             android:label="@string/title_activity_four_players" >
         </activity>
     </application>

@@ -1,33 +1,10 @@
-package com.example.chen1.chen1_reflex;
+package com.example.chen1.chen1_reflex.Module;
 
 import android.app.Activity;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.lang.reflect.Type;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-
-import static com.example.chen1.chen1_reflex.StatisticsListController.clearFourPlayerStatistics;
-import static com.example.chen1.chen1_reflex.StatisticsListController.clearSinlgeStatistics;
-import static com.example.chen1.chen1_reflex.StatisticsListController.clearThreePlayerStatistics;
-import static com.example.chen1.chen1_reflex.StatisticsListController.clearTwoPlayerStatistics;
-import static com.example.chen1.chen1_reflex.StatisticsListController.getFourPlayerStatistics;
-import static com.example.chen1.chen1_reflex.StatisticsListController.getSingleStatistics;
-import static com.example.chen1.chen1_reflex.StatisticsListController.getThreePlayerStatistics;
-import static com.example.chen1.chen1_reflex.StatisticsListController.getTwoPlayerStatistics;
-import static com.example.chen1.chen1_reflex.StatisticsListController.singleStatistics;
-import static com.example.chen1.chen1_reflex.StatisticsListController.twoPlayerBuzz;
 
 /**
  * Created by chen1 on 10/1/15.
@@ -137,36 +114,36 @@ public class StatisticsCalculator extends Activity{
 
     public void calAll(){
 
-        statistics = StatisticsListController.getSingleStatistics();
+        statistics = StatisticsListStorage.getSingleStatistics();
         ArrayList temp;
         temp = statistics;
 
-        for (int i = 1; i <= StatisticsListController.twoPlayerBuzz.size(); i++) {
-            if (StatisticsListController.twoPlayerBuzz.get(StatisticsListController.twoPlayerBuzz.size() - i) == 1) {
+        for (int i = 1; i <= StatisticsListStorage.twoPlayerBuzz.size(); i++) {
+            if (StatisticsListStorage.twoPlayerBuzz.get(StatisticsListStorage.twoPlayerBuzz.size() - i) == 1) {
                 twoPlayerOne++;}
-            if (StatisticsListController.twoPlayerBuzz.get(StatisticsListController.twoPlayerBuzz.size() - i) == 2) {
+            if (StatisticsListStorage.twoPlayerBuzz.get(StatisticsListStorage.twoPlayerBuzz.size() - i) == 2) {
                 twoPlayerTwo++;}
         }
 
 
-        for (int i = 1; i <= StatisticsListController.threePlayerBuzz.size(); i++) {
-            if (StatisticsListController.threePlayerBuzz.get(StatisticsListController.threePlayerBuzz.size() - i) == 1) {
+        for (int i = 1; i <= StatisticsListStorage.threePlayerBuzz.size(); i++) {
+            if (StatisticsListStorage.threePlayerBuzz.get(StatisticsListStorage.threePlayerBuzz.size() - i) == 1) {
                 threePlayerOne++;}
-            if (StatisticsListController.threePlayerBuzz.get(StatisticsListController.threePlayerBuzz.size() - i) == 2) {
+            if (StatisticsListStorage.threePlayerBuzz.get(StatisticsListStorage.threePlayerBuzz.size() - i) == 2) {
                 threePlayerTwo++;}
-            if (StatisticsListController.threePlayerBuzz.get(StatisticsListController.threePlayerBuzz.size() - i) == 3) {
+            if (StatisticsListStorage.threePlayerBuzz.get(StatisticsListStorage.threePlayerBuzz.size() - i) == 3) {
                 threePlayerThree++;}
         }
 
 
-        for (int i = 1; i <= StatisticsListController.fourPlayerBuzz.size(); i++) {
-            if (StatisticsListController.fourPlayerBuzz.get(StatisticsListController.fourPlayerBuzz.size() - i) == 1) {
+        for (int i = 1; i <= StatisticsListStorage.fourPlayerBuzz.size(); i++) {
+            if (StatisticsListStorage.fourPlayerBuzz.get(StatisticsListStorage.fourPlayerBuzz.size() - i) == 1) {
                 fourPlayerOne++;}
-            if (StatisticsListController.fourPlayerBuzz.get(StatisticsListController.fourPlayerBuzz.size() - i) == 2) {
+            if (StatisticsListStorage.fourPlayerBuzz.get(StatisticsListStorage.fourPlayerBuzz.size() - i) == 2) {
                 fourPlayerTwo++;}
-            if (StatisticsListController.fourPlayerBuzz.get(StatisticsListController.fourPlayerBuzz.size() - i) == 3) {
+            if (StatisticsListStorage.fourPlayerBuzz.get(StatisticsListStorage.fourPlayerBuzz.size() - i) == 3) {
                 fourPlayerThree++;}
-            if (StatisticsListController.fourPlayerBuzz.get(StatisticsListController.fourPlayerBuzz.size() - i) == 4) {
+            if (StatisticsListStorage.fourPlayerBuzz.get(StatisticsListStorage.fourPlayerBuzz.size() - i) == 4) {
                 fourPlayerFour++;}
         }
 
@@ -229,10 +206,10 @@ public class StatisticsCalculator extends Activity{
         fourPlayerTwo = 0;
         fourPlayerThree = 0;
         fourPlayerFour = 0;
-        clearSinlgeStatistics();
-        clearTwoPlayerStatistics();
-        clearThreePlayerStatistics();
-        clearFourPlayerStatistics();
+        StatisticsListStorage.clearSinlgeStatistics();
+        StatisticsListStorage.clearTwoPlayerStatistics();
+        StatisticsListStorage.clearThreePlayerStatistics();
+        StatisticsListStorage.clearFourPlayerStatistics();
         lastTenList.clear();
         lastHundredList.clear();
         medianTen = Double.NaN;

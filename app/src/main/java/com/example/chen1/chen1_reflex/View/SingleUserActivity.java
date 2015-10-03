@@ -1,36 +1,22 @@
-package com.example.chen1.chen1_reflex;
+package com.example.chen1.chen1_reflex.View;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.CountDownTimer;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import com.example.chen1.chen1_reflex.Module.ReactionTimer;
+import com.example.chen1.chen1_reflex.Module.SaveLoadFiles;
+import com.example.chen1.chen1_reflex.Module.StatisticsListStorage;
+import com.example.chen1.chen1_reflex.R;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.Random;
-
-import static com.example.chen1.chen1_reflex.StatisticsListController.singleStatistics;
-import static com.example.chen1.chen1_reflex.StatisticsListController.threePlayerBuzz;
-import static com.example.chen1.chen1_reflex.StatisticsListController.twoPlayerBuzz;
 
 public class SingleUserActivity extends Activity {
 
@@ -45,7 +31,7 @@ public class SingleUserActivity extends Activity {
 
     int randomTime;
     boolean displaying = false;
-    ReactionTimer reactionTimer = new ReactionTimer();
+    ReactionTimer reactionTimer;
     SaveLoadFiles saveLoadFiles = new SaveLoadFiles();
 
 
@@ -55,6 +41,7 @@ public class SingleUserActivity extends Activity {
         setContentView(R.layout.activity_single_user);
         displayedResult = (TextView) findViewById(R.id.reaction_time_display);
         saveLoadFiles.loadFromFile(SingleUserActivity.this);
+        reactionTimer = new ReactionTimer(SingleUserActivity.this);
 
         AlertDialog alertDialog = new AlertDialog.Builder(SingleUserActivity.this).create();
         alertDialog.setTitle("Introduction");
@@ -65,7 +52,8 @@ public class SingleUserActivity extends Activity {
                     public void onClick(DialogInterface dialog, int which) {
                         start = true;
                         dialog.dismiss();
-                        startGame();
+                        reactionTimer.setStart(true);
+                        reactionTimer.startGame();
                     }
                 });
         alertDialog.show();
@@ -97,61 +85,15 @@ public class SingleUserActivity extends Activity {
     protected void onStart() {
         super.onStart();
         saveLoadFiles.loadFromFile(SingleUserActivity.this);
+        reactionTimer = new ReactionTimer(SingleUserActivity.this);
     }
 
-    public void startGame() {
-        randomTime = random.nextInt(2000) + 10;
-        ctimer = new CountDownTimer(randomTime, 10) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                displaying = false;
-                displayedResult.setText("Wait");
-                timeUp = false;
-            }
-
-            @Override
-            public void onFinish() {
-                if (timeUp == false) {
-                    displayedResult.setText("CLICK NOW!");
-                }
-                timeUp = true;
-                reactionTimer.setStartTimeStamp();
-            }
-        }.start();
-    }
-
-    public void startAgain() {
-        againTimer = new CountDownTimer(1000, 1) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                displaying = true;
-                displayedResult.setText(reactionTimer.lagText());
-            }
-
-            @Override
-            public void onFinish() {
-                displayedResult.setText("Wait");
-                reactionTimer.clearResult();
-                startGame();
-            }
-        }.start();
-    }
-
-    public void checkReflex(View view) {
-        if (timeUp == false && start == true) {
+    public void singleClick(View view){
+        reactionTimer.checkReflex();
+        if (reactionTimer.getTimeUp() == false) {
             Toast.makeText(this, "You clicked early! Timer Now start again!", Toast.LENGTH_SHORT).show();
-            early = true;
-            ctimer.cancel();
-            startGame();
-            displayedResult.setText("Wait");
-        } else if (timeUp == true && displaying == false && start == true) {
-            reactionTimer.setEndTimeStamp();
-            reactionTimer.getLag();
-            StatisticsListController.singleStatistics.add(reactionTimer.lag());
+        }else if (reactionTimer.getTimeUp() == true){
             saveLoadFiles.saveInFileSingle(SingleUserActivity.this);
-            startAgain();
-        } else if (start == false) {
-            return;
         }
     }
 

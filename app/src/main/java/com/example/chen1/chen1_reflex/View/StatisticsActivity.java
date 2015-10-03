@@ -1,4 +1,4 @@
-package com.example.chen1.chen1_reflex;
+package com.example.chen1.chen1_reflex.View;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -10,6 +10,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.chen1.chen1_reflex.Module.SaveLoadFiles;
+import com.example.chen1.chen1_reflex.Module.StatisticsCalculator;
+import com.example.chen1.chen1_reflex.R;
 
 
 public class StatisticsActivity extends Activity {

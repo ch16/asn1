@@ -1,24 +1,4 @@
-package com.example.chen1.chen1_reflex;
-
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.os.CountDownTimer;
-import android.view.View;
-
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
+package com.example.chen1.chen1_reflex.Module;
 
 /**
  * Created by chen1 on 10/1/15.
@@ -60,10 +40,10 @@ public class TwoPlayerManager extends MultiPlayerManager{
 
             if (playerOneTime > playerTwoTime) {
                 resultText = resultText + "\nPlayer 2 Wins!";
-                StatisticsListController.getTwoPlayerStatistics().add(2);
+                StatisticsListStorage.getTwoPlayerStatistics().add(2);
             } else if (playerTwoTime > playerOneTime) {
                 resultText = resultText + "\nPlayer 1 Wins!";
-                StatisticsListController.getTwoPlayerStatistics().add(1);
+                StatisticsListStorage.getTwoPlayerStatistics().add(1);
             }
 
     }
