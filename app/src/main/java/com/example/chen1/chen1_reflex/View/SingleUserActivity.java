@@ -21,16 +21,9 @@ import java.util.Random;
 public class SingleUserActivity extends Activity {
 
     TextView displayedResult;
-    CountDownTimer ctimer;
-    CountDownTimer againTimer;
-    Random random = new Random();
 
-    boolean early = false;
-    boolean timeUp = false;
     boolean start = false;
 
-    int randomTime;
-    boolean displaying = false;
     ReactionTimer reactionTimer;
     SaveLoadFiles saveLoadFiles = new SaveLoadFiles();
 
