@@ -13,43 +13,31 @@ public class FourPlayerManager extends MultiPlayerManager{
     double playerFourTime = Double.POSITIVE_INFINITY;
 
 
-    public void notePlayerOne(){
+    public void notePlayerOne() {
 
-        if (displaying == false){
-            clickedTimes ++;
-            playerOneTime = System.currentTimeMillis();
-        }
+        clickedTimes++;
+        playerOneTime = System.currentTimeMillis();
     }
 
-    public void notePlayerTwo(){
+    public void notePlayerTwo() {
 
-        if (displaying == false){
-            clickedTimes ++;
-            playerTwoTime = System.currentTimeMillis();
-
-        }
+        clickedTimes++;
+        playerTwoTime = System.currentTimeMillis();
     }
 
-    public void notePlayerThree(){
+    public void notePlayerThree() {
 
-        if (displaying == false){
-            clickedTimes ++;
-            playerThreeTime = System.currentTimeMillis();
-
-        }
+        clickedTimes++;
+        playerThreeTime = System.currentTimeMillis();
     }
 
-    public void notePlayerFour(){
+    public void notePlayerFour() {
 
-        if (displaying == false){
-            clickedTimes ++;
-            playerFourTime = System.currentTimeMillis();
-
-        }
+        clickedTimes++;
+        playerFourTime = System.currentTimeMillis();
     }
 
     public void checkResult() {
-        displaying = true;
         if (playerOneTime != Double.POSITIVE_INFINITY) {
             resultText = resultText + "Player 1 clicked\n";
         }
@@ -79,7 +67,6 @@ public class FourPlayerManager extends MultiPlayerManager{
     }
 
     public void clearResult(){
-        displaying = false;
         clickedTimes = 0;
         playerOneTime = Double.POSITIVE_INFINITY;
         playerTwoTime = Double.POSITIVE_INFINITY;

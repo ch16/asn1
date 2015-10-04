@@ -14,33 +14,22 @@ public class ThreePlayerManager extends MultiPlayerManager{
 
 
     public void notePlayerOne(){
-
-        if (displaying == false){
             clickedTimes ++;
             playerOneTime = System.currentTimeMillis();
-        }
     }
 
     public void notePlayerTwo(){
 
-        if (displaying == false){
             clickedTimes ++;
             playerTwoTime = System.currentTimeMillis();
-
-        }
     }
-
     public void notePlayerThree(){
 
-        if (displaying == false){
             clickedTimes ++;
             playerThreeTime = System.currentTimeMillis();
-
-        }
     }
 
     public void checkResult() {
-        displaying = true;
         if (playerOneTime != Double.POSITIVE_INFINITY) {
             resultText = resultText + "Player 1 Clicked\n";
         }
@@ -64,7 +53,6 @@ public class ThreePlayerManager extends MultiPlayerManager{
     }
 
     public void clearResult(){
-        displaying = false;
         clickedTimes = 0;
         playerOneTime = Double.POSITIVE_INFINITY;
         playerTwoTime = Double.POSITIVE_INFINITY;

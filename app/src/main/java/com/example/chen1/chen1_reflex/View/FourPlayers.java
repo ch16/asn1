@@ -29,7 +29,6 @@ public class FourPlayers extends Activity {
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Start ",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        fourPlayerManager.setDisplaying(false);
                         dialog.dismiss();
                     }
                 });

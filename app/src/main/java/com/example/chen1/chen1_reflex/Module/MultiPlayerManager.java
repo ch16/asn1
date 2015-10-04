@@ -7,15 +7,10 @@ public class MultiPlayerManager {
     public MultiPlayerManager() {
     }
 
-    boolean displaying = true;
+    
     int clickedTimes = 0;
 
     String resultText = "";
-
-
-    public void setDisplaying(boolean tf){
-        displaying =tf;
-    }
 
     public String getText(){
         return resultText;
@@ -27,3 +22,5 @@ public class MultiPlayerManager {
 
 
 }
+
+
