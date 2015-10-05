@@ -95,11 +95,30 @@ public class ReactionTimer extends Activity {
         }.start();
     }
 
+    public void disPlayEarlyWarning() {
+        againTimer = new CountDownTimer(700, 1) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                displaying = true;
+                TextView displayedResult = (TextView) ((Activity)context).findViewById(R.id.reaction_time_display);
+                displayedResult.setText("You Clicked Early! Now Start Again!");
+            }
+
+            @Override
+            public void onFinish() {
+                TextView displayedResult = (TextView) ((Activity)context).findViewById(R.id.reaction_time_display);
+                displayedResult.setText("Wait");
+                clearResult();
+                startGame();
+            }
+        }.start();
+    }
+
     public void checkReflex() {
         if (timeUp == false && start == true) {
             early = true;
             ctimer.cancel();
-            startGame();
+	    disPlayEarlyWarning();
             TextView displayedResult = (TextView) ((Activity)context).findViewById(R.id.reaction_time_display);
             displayedResult.setText("Wait");
         } else if (timeUp == true && displaying == false && start == true) {

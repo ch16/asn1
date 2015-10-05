@@ -1,5 +1,6 @@
 package com.example.chen1.chen1_reflex.View;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,7 +12,7 @@ import android.view.View;
 
 import com.example.chen1.chen1_reflex.R;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

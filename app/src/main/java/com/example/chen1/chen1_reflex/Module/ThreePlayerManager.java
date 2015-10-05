@@ -3,14 +3,26 @@ package com.example.chen1.chen1_reflex.Module;
 /**
  * Created by chen1 on 10/1/15.
  */
-public class ThreePlayerManager extends MultiPlayerManager{
+public class ThreePlayerManager {
     public ThreePlayerManager() {
     }
 
 
     double playerOneTime = Double.POSITIVE_INFINITY;
     double playerTwoTime = Double.POSITIVE_INFINITY;
-    double playerThreeTime = Double.POSITIVE_INFINITY;
+    double playerThreeTime = Double.POSITIVE_INFINITY;    
+    int clickedTimes = 0;
+
+    String resultText = "";
+
+    public String getText(){
+        return resultText;
+    }
+
+    public int getClickedTimes(){
+        return clickedTimes;
+    }
+
 
 
     public void notePlayerOne(){

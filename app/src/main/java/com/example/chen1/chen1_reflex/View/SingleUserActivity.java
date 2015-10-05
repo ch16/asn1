@@ -83,9 +83,7 @@ public class SingleUserActivity extends Activity {
 
     public void singleClick(View view){
         reactionTimer.checkReflex();
-        if (reactionTimer.getTimeUp() == false) {
-            Toast.makeText(this, "You clicked early! Timer Now start again!", Toast.LENGTH_SHORT).show();
-        }else if (reactionTimer.getTimeUp() == true){
+        if (reactionTimer.getTimeUp() == true) {
             saveLoadFiles.saveInFileSingle(SingleUserActivity.this);
         }
     }
