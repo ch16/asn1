@@ -13,6 +13,7 @@ public class StatisticsCalculator extends Activity{
     public StatisticsCalculator() {
     }
 
+    //for recording how many times each player has clicked in each of the multiplayer mode
     private int twoPlayerOne = 0;
     private int twoPlayerTwo = 0;
     private int threePlayerOne = 0;
@@ -23,6 +24,7 @@ public class StatisticsCalculator extends Activity{
     private int fourPlayerThree = 0;
     private int fourPlayerFour = 0;
 
+    //for calculating and saving the maximum and minimum time of last ten/hundred and all
     private double maxTen;
     private double minTen;
     private double maxHundred;
@@ -30,21 +32,24 @@ public class StatisticsCalculator extends Activity{
     private double maxAll;
     private double minAll;
 
+    //for calculating and saving the average
     private double averageTen;
     private double averageHundred ;
     private double averageAll;
 
+    //for calculating and saving the median
     private double medianTen = Double.NaN;
     private double medianHundred = Double.NaN;
     private double medianAll = Double.NaN;
 
-
+    //it's the ArrayList of single user statistics
     private ArrayList statistics;
 
     private ArrayList lastTenList = new ArrayList<Double>();
     private ArrayList lastHundredList = new ArrayList<Double>();
     private DecimalFormat formatter = new DecimalFormat("#0.000");
 
+    //the function for finding the maximum of last ten or Hundred or all
     public double findMax(ArrayList stastistics, int tenHundred) {
         double max = 0;
         double temp = 0;
@@ -56,10 +61,10 @@ public class StatisticsCalculator extends Activity{
                 }
             }
         }
-
         return max;
     }
-
+    
+    //the function for finding the minimum of last ten or hundred or all
     public double findMin(ArrayList stastistics, int tenHundred) {
         double min = Double.POSITIVE_INFINITY;
         double temp = 0;
@@ -77,6 +82,7 @@ public class StatisticsCalculator extends Activity{
         return min;
     }
 
+    //calculate the median of a given assorted ArrayList
     public double findMedian(ArrayList alist) {
         double median = 0;
         if (alist.size() % 2 == 1) {
@@ -90,6 +96,7 @@ public class StatisticsCalculator extends Activity{
         return median;
     }
 
+    //calculate the average given a list and the number of last num it wants to calculate
     public double findAverageOfLastN(ArrayList blist, int num) {
         double lastN = 0;
         for (int i = 1; i <= num; i++) {
@@ -112,12 +119,14 @@ public class StatisticsCalculator extends Activity{
         return average;
     }
 
+    //get all the statistics into the attributes
     public void calAll(){
 
         statistics = StatisticsListStorage.getSingleStatistics();
         ArrayList temp;
         temp = statistics;
 
+        //get two player buzz record
         for (int i = 1; i <= StatisticsListStorage.twoPlayerBuzz.size(); i++) {
             if (StatisticsListStorage.twoPlayerBuzz.get(StatisticsListStorage.twoPlayerBuzz.size() - i) == 1) {
                 twoPlayerOne++;}
@@ -125,7 +134,7 @@ public class StatisticsCalculator extends Activity{
                 twoPlayerTwo++;}
         }
 
-
+        //get three player buzz record
         for (int i = 1; i <= StatisticsListStorage.threePlayerBuzz.size(); i++) {
             if (StatisticsListStorage.threePlayerBuzz.get(StatisticsListStorage.threePlayerBuzz.size() - i) == 1) {
                 threePlayerOne++;}
@@ -135,7 +144,7 @@ public class StatisticsCalculator extends Activity{
                 threePlayerThree++;}
         }
 
-
+        //get four player buzz record
         for (int i = 1; i <= StatisticsListStorage.fourPlayerBuzz.size(); i++) {
             if (StatisticsListStorage.fourPlayerBuzz.get(StatisticsListStorage.fourPlayerBuzz.size() - i) == 1) {
                 fourPlayerOne++;}
@@ -147,6 +156,7 @@ public class StatisticsCalculator extends Activity{
                 fourPlayerFour++;}
         }
 
+        //get the minimums and maximums
         maxTen = findMax(statistics, 10) / 1000;
         minTen = findMin(statistics, 10) / 1000;
         maxHundred = findMax(statistics, 100) / 1000;
@@ -154,10 +164,12 @@ public class StatisticsCalculator extends Activity{
         maxAll = findMax(statistics, statistics.size()) / 1000;
         minAll = findMin(statistics, statistics.size()) / 1000;
 
+        //get the average
         averageTen = findAverageOfLastN(statistics,10);
         averageHundred = findAverageOfLastN(statistics,100);
         averageAll = findAverageOfLastN(statistics,statistics.size());
 
+        //get last ten and last hundred records into two ArrayList 
         for (int i = 1; i <= 10; i++) {
             if (statistics.size() - i >= 0) {
                 lastTenList.add(statistics.get(statistics.size() - i));}}
@@ -167,7 +179,7 @@ public class StatisticsCalculator extends Activity{
                 lastHundredList.add(statistics.get(statistics.size() - i));}}
 
 
-
+        //assort the last ten and last hundred before finding the median
         Collections.sort(lastTenList);
         medianTen = findMedian(lastTenList);
         Collections.sort(lastHundredList);
@@ -177,7 +189,7 @@ public class StatisticsCalculator extends Activity{
 
     }
 
-
+    //after finishing calculating, generate a string to return to the Statistics activity
     public String getStatString(){
         String statString = "Single Player Stat(IN SECONDS):\nAverage of last ten: " + formatter.format(averageTen)
                 + "\nAverage of last hundred: " + formatter.format(averageHundred) + "\n"
@@ -195,7 +207,7 @@ public class StatisticsCalculator extends Activity{
         return statString;
     }
 
-
+    //clear all the results if clear Stat is clicked in the Statistics activity
     public void clearAll(){
         twoPlayerOne = 0;
         twoPlayerTwo = 0;
