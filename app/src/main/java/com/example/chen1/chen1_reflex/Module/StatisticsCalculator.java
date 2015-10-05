@@ -13,37 +13,37 @@ public class StatisticsCalculator extends Activity{
     public StatisticsCalculator() {
     }
 
-    int twoPlayerOne = 0;
-    int twoPlayerTwo = 0;
-    int threePlayerOne = 0;
-    int threePlayerTwo = 0;
-    int threePlayerThree = 0;
-    int fourPlayerOne = 0;
-    int fourPlayerTwo = 0;
-    int fourPlayerThree = 0;
-    int fourPlayerFour = 0;
+    private int twoPlayerOne = 0;
+    private int twoPlayerTwo = 0;
+    private int threePlayerOne = 0;
+    private int threePlayerTwo = 0;
+    private int threePlayerThree = 0;
+    private int fourPlayerOne = 0;
+    private int fourPlayerTwo = 0;
+    private int fourPlayerThree = 0;
+    private int fourPlayerFour = 0;
 
-    double maxTen;
-    double minTen;
-    double maxHundred;
-    double minHundred;
-    double maxAll;
-    double minAll;
+    private double maxTen;
+    private double minTen;
+    private double maxHundred;
+    private double minHundred;
+    private double maxAll;
+    private double minAll;
 
-    double averageTen;
-    double averageHundred ;
-    double averageAll;
+    private double averageTen;
+    private double averageHundred ;
+    private double averageAll;
 
-    double medianTen = Double.NaN;
-    double medianHundred = Double.NaN;
-    double medianAll = Double.NaN;
+    private double medianTen = Double.NaN;
+    private double medianHundred = Double.NaN;
+    private double medianAll = Double.NaN;
 
 
-    ArrayList statistics;
+    private ArrayList statistics;
 
-    ArrayList lastTenList = new ArrayList<Double>();
-    ArrayList lastHundredList = new ArrayList<Double>();
-    DecimalFormat formatter = new DecimalFormat("#0.000");
+    private ArrayList lastTenList = new ArrayList<Double>();
+    private ArrayList lastHundredList = new ArrayList<Double>();
+    private DecimalFormat formatter = new DecimalFormat("#0.000");
 
     public double findMax(ArrayList stastistics, int tenHundred) {
         double max = 0;
