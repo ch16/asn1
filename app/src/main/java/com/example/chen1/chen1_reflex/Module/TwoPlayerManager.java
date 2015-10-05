@@ -33,7 +33,7 @@ public class TwoPlayerManager {
             playerTwoTime = System.currentTimeMillis();
     }
 
-    public void checkResult() {
+    public void checkTwoResult() {
             if (playerOneTime != Double.POSITIVE_INFINITY) {
                 resultText = resultText + "Player 1 Clicked\n";
             }
@@ -51,7 +51,7 @@ public class TwoPlayerManager {
 
     }
 
-    public void clearResult(){
+    public void clearTwoResult(){
 
         clickedTimes = 0;
         playerOneTime = Double.POSITIVE_INFINITY;
