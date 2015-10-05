@@ -60,18 +60,19 @@ public class StatisticsActivity extends Activity {
         sLFiles.loadFromFile(StatisticsActivity.this);
     }
 
+    //calculate and display the statistics
     public void calculateStatistics() {
-
+        //first load the statistics from the files
         sLFiles.loadFromFile(StatisticsActivity.this);
         displayStatistics = (TextView) findViewById(R.id.statistics_text);
         displayStatistics.setMovementMethod(new ScrollingMovementMethod());
-
+        //after calculating, display the result in the Textview
         sCal.calAll();
         displayStatistics.setText(sCal.getStatString());
 
     }
 
-
+    //clear the result if the clear button is clicked, and save the cleared lists in the files
     public void clearReactionStat(View view) {
         sCal.clearAll();
         sLFiles.saveInAllFile(StatisticsActivity.this);
