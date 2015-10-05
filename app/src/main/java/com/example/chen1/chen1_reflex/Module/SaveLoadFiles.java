@@ -24,14 +24,14 @@ public class SaveLoadFiles extends Activity{
     public SaveLoadFiles() {
     }
 
+    //the files for each arraylist to be saved in, respectively for single user mode and multiplayer mode
     static final String FILENAME = "file.sav";
     static final String FILENAME2 = "file2.sav";
     static final String FILENAME3 = "file3.sav";
     static final String FILENAME4 = "file4.sav";
 
-
+    //save the single user statistics in file.sav during SingleUser Activity
     public void saveInFileSingle(Context context){
-
         try {
             FileOutputStream fos = context.openFileOutput(FILENAME, MODE_PRIVATE);
             Gson gson = new Gson();
@@ -39,7 +39,6 @@ public class SaveLoadFiles extends Activity{
             gson.toJson(StatisticsListStorage.getSingleStatistics(), out);
             out.flush();
             fos.close();
-
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
             throw new RuntimeException(e);
@@ -49,8 +48,8 @@ public class SaveLoadFiles extends Activity{
         }
     }
 
+    //save the two player statistics in file2.sav during TwoPlayer Activity
     public void saveInFile2(Context context){
-
         try {
             FileOutputStream fos2 = context.openFileOutput(FILENAME2, MODE_PRIVATE);
             Gson gson2 = new Gson();
@@ -58,7 +57,6 @@ public class SaveLoadFiles extends Activity{
             gson2.toJson(StatisticsListStorage.getTwoPlayerStatistics(), out2);
             out2.flush();
             fos2.close();
-
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
             throw new RuntimeException(e);
@@ -68,8 +66,8 @@ public class SaveLoadFiles extends Activity{
         }
     }
 
+    //save the three player statistics in file3.sav during ThreePlayer Activity
     public void saveInFile3(Context context){
-
         try {
             FileOutputStream fos3 = context.openFileOutput(FILENAME3, MODE_PRIVATE);
             Gson gson3 = new Gson();
@@ -86,18 +84,15 @@ public class SaveLoadFiles extends Activity{
         }
     }
 
+    //save the four player statistics in file4.sav during FourPlayer Activity
     public void saveInFile4(Context context){
-
         try {
             FileOutputStream fos4 = context.openFileOutput(FILENAME4, MODE_PRIVATE);
             Gson gson4 = new Gson();
             BufferedWriter out4 = new BufferedWriter(new OutputStreamWriter(fos4));
             gson4.toJson(StatisticsListStorage.getFourPlayerStatistics(), out4);
-
             out4.flush();
-
             fos4.close();
-
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
             throw new RuntimeException(e);
@@ -107,7 +102,7 @@ public class SaveLoadFiles extends Activity{
         }
     }
 
-
+    //save the all statistics in the files during Statistics Activity after clearing the result
     public void saveInAllFile(Context context){
 
         try {
@@ -150,7 +145,7 @@ public class SaveLoadFiles extends Activity{
         }
     }
 
-
+    //for loading the recorded statistics while starting each activity
     public void loadFromFile(Context context) {
         //chagne all the string arraylist into double arraylist
         try {
