@@ -68,7 +68,7 @@ public class ThreePlayers extends Activity {
     public void playerOne(View view){
         threePlayerManager.notePlayerOne();
         if (threePlayerManager.getClickedTimes() == 1) {
-            threePlayerManager.checkResult();
+            threePlayerManager.checkThreeResult();
             saveLoadFiles.saveInFile3(ThreePlayers.this);
             goToDialog();
         }
@@ -77,7 +77,7 @@ public class ThreePlayers extends Activity {
     public void playerTwo(View view){
         threePlayerManager.notePlayerTwo();
         if (threePlayerManager.getClickedTimes() == 1) {
-            threePlayerManager.checkResult();
+            threePlayerManager.checkThreeResult();
             saveLoadFiles.saveInFile3(ThreePlayers.this);
             goToDialog();
         }
@@ -87,7 +87,7 @@ public class ThreePlayers extends Activity {
     public void playerThree(View view){
         threePlayerManager.notePlayerThree();
         if (threePlayerManager.getClickedTimes() == 1) {
-            threePlayerManager.checkResult();
+            threePlayerManager.checkThreeResult();
             saveLoadFiles.saveInFile3(ThreePlayers.this);
             goToDialog();
         }
@@ -101,7 +101,7 @@ public class ThreePlayers extends Activity {
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Start Again",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        threePlayerManager.clearResult();
+                        threePlayerManager.clearThreeResult();
                         dialog.dismiss();
                     }
                 });
