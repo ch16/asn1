@@ -34,23 +34,23 @@ public class ReactionTimer extends Activity {
         this.context=context;
     }
 
-    double startTime;
-    double endTime;
-    double lag;
-    double displayLag;
+    private double startTime;
+    private double endTime;
+    private double lag;
+    private double displayLag;
 
 
 
-    CountDownTimer ctimer;
-    CountDownTimer againTimer;
-    Random random = new Random();
+    private CountDownTimer ctimer;
+    private CountDownTimer againTimer;
+    private Random random = new Random();
 
-    boolean early = false;
-    boolean timeUp = false;
-    boolean start = false;
+    private boolean early = false;
+    private boolean timeUp = false;
+    private boolean start = false;
 
-    int randomTime;
-    boolean displaying = false;
+    private int randomTime;
+    private boolean displaying = false;
 
 
     public void startGame() {
