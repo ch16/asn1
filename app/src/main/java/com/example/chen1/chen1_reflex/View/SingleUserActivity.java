@@ -44,7 +44,7 @@ public class SingleUserActivity extends Activity {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                         reactionTimer.setStart(true);
-                        reactionTimer.startGame();
+                        reactionTimer.startTimer();
                     }
                 });
         alertDialog.show();
