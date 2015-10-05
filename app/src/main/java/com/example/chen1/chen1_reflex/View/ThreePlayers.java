@@ -23,7 +23,7 @@ public class ThreePlayers extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_three_players);
         saveLoadFiles.loadFromFile(ThreePlayers.this);
-
+        //display the intro before starting the game, start after dismissing the dialog
         AlertDialog alertDialog = new AlertDialog.Builder(ThreePlayers.this).create();
         alertDialog.setMessage("The Player Who Clicks Faster Wins");
         alertDialog.setCanceledOnTouchOutside(false);
@@ -64,7 +64,8 @@ public class ThreePlayers extends Activity {
         saveLoadFiles.loadFromFile(ThreePlayers.this);
     }
 
-
+    /*if player one clicks, call the method from the TwoPlayerManager, note that player one has clicks, 
+    increament the clicked time by one, only if it's one, then call manager and check the result and go to the dialog*/
     public void playerOne(View view){
         threePlayerManager.notePlayerOne();
         if (threePlayerManager.getClickedTimes() == 1) {
@@ -73,7 +74,8 @@ public class ThreePlayers extends Activity {
             goToDialog();
         }
     }
-
+    
+    //if player two clicks, call the method from TwoPlayerManager, note that player two has clicks
     public void playerTwo(View view){
         threePlayerManager.notePlayerTwo();
         if (threePlayerManager.getClickedTimes() == 1) {
@@ -81,9 +83,9 @@ public class ThreePlayers extends Activity {
             saveLoadFiles.saveInFile3(ThreePlayers.this);
             goToDialog();
         }
-
     }
-
+    
+    //if player three clicks, call the method from TwoPlayerManager, note that player three has clicks
     public void playerThree(View view){
         threePlayerManager.notePlayerThree();
         if (threePlayerManager.getClickedTimes() == 1) {
@@ -94,6 +96,7 @@ public class ThreePlayers extends Activity {
 
     }
 
+    //display the result of who wins and start the next round after dismissing
     public void goToDialog(){
         AlertDialog alertDialog = new AlertDialog.Builder(ThreePlayers.this).create();
         alertDialog.setMessage(threePlayerManager.getText());
