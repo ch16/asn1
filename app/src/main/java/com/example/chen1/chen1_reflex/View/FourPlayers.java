@@ -66,7 +66,7 @@ public class FourPlayers extends Activity {
     public void playerOne(View view){
         fourPlayerManager.notePlayerOne();
         if (fourPlayerManager.getClickedTimes() == 1) {
-            fourPlayerManager.checkResult();
+            fourPlayerManager.checkFourResults();
             saveLoadFiles.saveInFile4(FourPlayers.this);
             goToDialog();
         }
@@ -75,7 +75,7 @@ public class FourPlayers extends Activity {
     public void playerTwo(View view){
         fourPlayerManager.notePlayerTwo();
         if (fourPlayerManager.getClickedTimes() == 1) {
-            fourPlayerManager.checkResult();
+            fourPlayerManager.checkFourResults();
             saveLoadFiles.saveInFile4(FourPlayers.this);
             goToDialog();
         }
@@ -85,7 +85,7 @@ public class FourPlayers extends Activity {
     public void playerThree(View view){
         fourPlayerManager.notePlayerThree();
         if (fourPlayerManager.getClickedTimes() == 1) {
-            fourPlayerManager.checkResult();
+            fourPlayerManager.checkFourResults();
             saveLoadFiles.saveInFile4(FourPlayers.this);
             goToDialog();
         }
@@ -94,7 +94,7 @@ public class FourPlayers extends Activity {
     public void playerFour(View view){
         fourPlayerManager.notePlayerFour();
         if (fourPlayerManager.getClickedTimes() == 1) {
-            fourPlayerManager.checkResult();
+            fourPlayerManager.checkFourResults();
             saveLoadFiles.saveInFile4(FourPlayers.this);
             goToDialog();
         }
@@ -109,7 +109,7 @@ public class FourPlayers extends Activity {
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Start Again",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        fourPlayerManager.clearResult();
+                        fourPlayerManager.clearFourResults();
                         dialog.dismiss();
                     }
                 });
