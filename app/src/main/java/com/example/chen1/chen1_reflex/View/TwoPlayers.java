@@ -22,7 +22,7 @@ public class TwoPlayers extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_two_players);
         saveLoadFiles.loadFromFile(TwoPlayers.this);
-
+        //display the intro before starting the game, start after dismissing the dialog
         AlertDialog alertDialog = new AlertDialog.Builder(TwoPlayers.this).create();
         alertDialog.setMessage("The Player Who Clicks Faster Wins");
         alertDialog.setCanceledOnTouchOutside(false);
