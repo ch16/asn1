@@ -19,15 +19,18 @@ import java.util.ArrayList;
  */
 public class StatisticsListStorage {
 
+    //the list of single user statistics and multiplayer buzz times
     static ArrayList singleStatistics = new ArrayList<Double>();
     static ArrayList twoPlayerBuzz = new ArrayList<Integer>();
     static ArrayList threePlayerBuzz = new ArrayList<Integer>();
     static ArrayList fourPlayerBuzz = new ArrayList<Integer>();
 
+    //the function for accessing the ArrayList
     public static ArrayList<Integer> getTwoPlayerStatistics(){
         return twoPlayerBuzz;
     }
 
+    //the function for clear the ArrayList
     public static void clearTwoPlayerStatistics(){
         twoPlayerBuzz.clear();
     }
