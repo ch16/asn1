@@ -63,6 +63,8 @@ public class FourPlayers extends Activity {
         saveLoadFiles.loadFromFile(FourPlayers.this);
     }
 
+    /*if player one clicks, call the method from the TwoPlayerManager, note that player one has clicks, 
+    increament the clicked time by one, only if it's one, then call manager and check the result and go to the dialog*/
     public void playerOne(View view){
         fourPlayerManager.notePlayerOne();
         if (fourPlayerManager.getClickedTimes() == 1) {
@@ -72,8 +74,7 @@ public class FourPlayers extends Activity {
         }
     }
 
-    /*if player two clicks, call the method from the TwoPlayerManager, note that player two has clicks, 
-    increament the clicked time by one, only if it's one, then call manager and check the result and go to the dialog*/
+    //if player two clicks, call the method from TwoPlayerManager, note that player two has clicks
     public void playerTwo(View view){
         fourPlayerManager.notePlayerTwo();
         if (fourPlayerManager.getClickedTimes() == 1) {
