@@ -62,7 +62,8 @@ public class TwoPlayers extends Activity {
         saveLoadFiles.loadFromFile(TwoPlayers.this);
     }
 
-
+    /*if player one clicks, call the method from the TwoPlayerManager, note that player one has clicks, 
+    increament the clicked time by one, only if it's one, then call manager and check the result and go to the dialog*/
     public void playerOne(View view){
         twoPlayerManager.notePlayerOne();
         if (twoPlayerManager.getClickedTimes() == 1) {
@@ -72,6 +73,7 @@ public class TwoPlayers extends Activity {
         }
     }
 
+    //if player two clicks, call the method from TwoPlayerManager, note that player two has clicks
     public void playerTwo(View view){
         twoPlayerManager.notePlayerTwo();
         if (twoPlayerManager.getClickedTimes() == 1) {
@@ -81,7 +83,7 @@ public class TwoPlayers extends Activity {
         }
     }
 
-
+    //display the result of who wins and start the next round after dismissing
     public void goToDialog(){
     AlertDialog alertDialog = new AlertDialog.Builder(TwoPlayers.this).create();
         alertDialog.setMessage(twoPlayerManager.getText());
@@ -95,6 +97,4 @@ public class TwoPlayers extends Activity {
                 });
         alertDialog.show();
     }
-
-
 }
