@@ -7,13 +7,13 @@ public class FourPlayerManager {
     public FourPlayerManager() {
     }
 
-    double playerOneTime = Double.POSITIVE_INFINITY;
-    double playerTwoTime = Double.POSITIVE_INFINITY;
-    double playerThreeTime = Double.POSITIVE_INFINITY;
-    double playerFourTime = Double.POSITIVE_INFINITY;
-    int clickedTimes = 0;
+    private double playerOneTime = Double.POSITIVE_INFINITY;
+    private double playerTwoTime = Double.POSITIVE_INFINITY;
+    private double playerThreeTime = Double.POSITIVE_INFINITY;
+    private double playerFourTime = Double.POSITIVE_INFINITY;
+    private int clickedTimes = 0;
 
-    String resultText = "";
+    private String resultText = "";
 
     public String getText(){
         return resultText;
