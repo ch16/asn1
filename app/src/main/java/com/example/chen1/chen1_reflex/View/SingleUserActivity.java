@@ -79,6 +79,7 @@ public class SingleUserActivity extends Activity {
         reactionTimer = new ReactionTimer(SingleUserActivity.this);
     }
 
+    //if buzz is clicked, then check if the time is up, if it's up, then record the lag into single statistics list
     public void singleClick(View view){
         reactionTimer.checkReflex();
         if (reactionTimer.getTimeUp() == true) {
