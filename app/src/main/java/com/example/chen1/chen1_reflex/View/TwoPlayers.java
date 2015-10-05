@@ -66,7 +66,7 @@ public class TwoPlayers extends Activity {
     public void playerOne(View view){
         twoPlayerManager.notePlayerOne();
         if (twoPlayerManager.getClickedTimes() == 1) {
-            twoPlayerManager.checkResult();
+            twoPlayerManager.checkTwoResult();
             saveLoadFiles.saveInFile2(TwoPlayers.this);
             goToDialog();
         }
@@ -75,7 +75,7 @@ public class TwoPlayers extends Activity {
     public void playerTwo(View view){
         twoPlayerManager.notePlayerTwo();
         if (twoPlayerManager.getClickedTimes() == 1) {
-            twoPlayerManager.checkResult();
+            twoPlayerManager.checkTwoResult();
             saveLoadFiles.saveInFile2(TwoPlayers.this);
             goToDialog();
         }
@@ -89,7 +89,7 @@ public class TwoPlayers extends Activity {
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Start Again",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        twoPlayerManager.clearResult();
+                        twoPlayerManager.clearTwoResult();
                         dialog.dismiss();
                     }
                 });
