@@ -43,17 +43,20 @@ public class MainActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    //got to singleUser Activity is the single user mode button is clicked
     public void singleUser(View view){
         Intent intent = new Intent(MainActivity.this, SingleUserActivity.class);
         startActivity(intent);
     }
 
+    //go to displayStat Activity if the statistics button is clicked
     public void displayStat(View view){
         Intent intent = new Intent(MainActivity.this, StatisticsActivity.class);
         startActivity(intent);
     }
 
-    //http://stackoverflow.com/questions/12244297/how-to-add-multiple-buttons-on-a-single-alertdialog
+    //copy right: http://stackoverflow.com/questions/12244297/how-to-add-multiple-buttons-on-a-single-alertdialog
+    //if the gameshow buzzer is clicked, the pop up the dialog to let user choose the number of players
     public void chooseNumOfPlayer(View view){
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle("Choose Number of Players");
