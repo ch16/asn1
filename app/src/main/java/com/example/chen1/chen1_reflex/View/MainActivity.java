@@ -64,9 +64,8 @@ public class MainActivity extends Activity {
                         {"2 Players", "3 Players", "4 Players"},
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        // The 'which' argument contains the index position
-                        // of the selected item
                         switch (which) {
+                            //go to according activity by clicked the button of players
                             case 0:
                                 Intent intent = new Intent(MainActivity.this, TwoPlayers.class);
                                 startActivity(intent);
