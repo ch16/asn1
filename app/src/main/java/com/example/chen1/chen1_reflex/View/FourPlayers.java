@@ -21,7 +21,7 @@ public class FourPlayers extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_four_players);
-
+        //display the intro before starting the game, after dismissing the dialog
         saveLoadFiles.loadFromFile(FourPlayers.this);
         AlertDialog alertDialog = new AlertDialog.Builder(FourPlayers.this).create();
         alertDialog.setMessage("The Player Who Clicks Faster Wins");
@@ -72,6 +72,8 @@ public class FourPlayers extends Activity {
         }
     }
 
+    /*if player two clicks, call the method from the TwoPlayerManager, note that player two has clicks, 
+    increament the clicked time by one, only if it's one, then call manager and check the result and go to the dialog*/
     public void playerTwo(View view){
         fourPlayerManager.notePlayerTwo();
         if (fourPlayerManager.getClickedTimes() == 1) {
@@ -82,6 +84,7 @@ public class FourPlayers extends Activity {
 
     }
 
+    //if player three clicks, call the method from TwoPlayerManager, note that player three has clicks
     public void playerThree(View view){
         fourPlayerManager.notePlayerThree();
         if (fourPlayerManager.getClickedTimes() == 1) {
@@ -91,6 +94,7 @@ public class FourPlayers extends Activity {
         }
     }
 
+    //if player four clicks, call the method from TwoPlayerManager, note that player four has clicks, 
     public void playerFour(View view){
         fourPlayerManager.notePlayerFour();
         if (fourPlayerManager.getClickedTimes() == 1) {
@@ -101,7 +105,7 @@ public class FourPlayers extends Activity {
 
     }
 
-
+    //display the result of who wins and start the next round after dismissing
     public void goToDialog(){
         AlertDialog alertDialog = new AlertDialog.Builder(FourPlayers.this).create();
         alertDialog.setMessage(fourPlayerManager.getText());
