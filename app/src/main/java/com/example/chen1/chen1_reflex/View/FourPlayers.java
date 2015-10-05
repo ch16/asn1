@@ -21,7 +21,7 @@ public class FourPlayers extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_four_players);
-        //display the intro before starting the game, after dismissing the dialog
+        //display the intro before starting the game, start after dismissing the dialog
         saveLoadFiles.loadFromFile(FourPlayers.this);
         AlertDialog alertDialog = new AlertDialog.Builder(FourPlayers.this).create();
         alertDialog.setMessage("The Player Who Clicks Faster Wins");
