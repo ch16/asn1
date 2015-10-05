@@ -55,6 +55,7 @@ public class ReactionTimer extends Activity {
     private boolean displaying = false;
 
     //the main timer of each round of refex game
+    //reference http://developer.android.com/reference/android/os/CountDownTimer.html
     public void startTimer() {
         randomTime = random.nextInt(2000) + 10;
         ctimer = new CountDownTimer(randomTime, 10) {

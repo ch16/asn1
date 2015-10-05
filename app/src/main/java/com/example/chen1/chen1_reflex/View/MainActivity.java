@@ -55,7 +55,7 @@ public class MainActivity extends Activity {
         startActivity(intent);
     }
 
-    //copy right: http://stackoverflow.com/questions/12244297/how-to-add-multiple-buttons-on-a-single-alertdialog
+    //reference: http://stackoverflow.com/questions/12244297/how-to-add-multiple-buttons-on-a-single-alertdialog
     //if the gameshow buzzer is clicked, the pop up the dialog to let user choose the number of players
     public void chooseNumOfPlayer(View view){
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);

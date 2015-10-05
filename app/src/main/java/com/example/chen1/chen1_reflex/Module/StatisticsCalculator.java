@@ -47,6 +47,7 @@ public class StatisticsCalculator extends Activity{
 
     private ArrayList lastTenList = new ArrayList<Double>();
     private ArrayList lastHundredList = new ArrayList<Double>();
+    //reference: http://stackoverflow.com/questions/12806278/double-decimal-formatting-in-java
     private DecimalFormat formatter = new DecimalFormat("#0.000");
 
     //the function for finding the maximum of last ten or Hundred or all

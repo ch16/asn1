@@ -79,7 +79,7 @@ public class StatisticsActivity extends Activity {
         calculateStatistics();
     }
 
-    //copy right http://www.tutorialspoint.com/android/android_sending_email.htm
+    //reference http://www.tutorialspoint.com/android/android_sending_email.htm
     public void sendEmail(View view){
         String[] TO = {""};
         String[] CC = {""};
