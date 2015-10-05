@@ -49,7 +49,7 @@ public class FourPlayerManager {
         playerFourTime = System.currentTimeMillis();
     }
 
-    public void checkResult() {
+    public void checkFourResults() {
         if (playerOneTime != Double.POSITIVE_INFINITY) {
             resultText = resultText + "Player 1 clicked\n";
         }
@@ -78,7 +78,7 @@ public class FourPlayerManager {
         }
     }
 
-    public void clearResult(){
+    public void clearFourResults(){
         clickedTimes = 0;
         playerOneTime = Double.POSITIVE_INFINITY;
         playerTwoTime = Double.POSITIVE_INFINITY;
