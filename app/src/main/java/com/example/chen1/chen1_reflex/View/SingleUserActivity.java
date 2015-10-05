@@ -22,7 +22,6 @@ public class SingleUserActivity extends Activity {
 
     TextView displayedResult;
 
-    boolean start = false;
 
     ReactionTimer reactionTimer;
     SaveLoadFiles saveLoadFiles = new SaveLoadFiles();
@@ -43,7 +42,6 @@ public class SingleUserActivity extends Activity {
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        start = true;
                         dialog.dismiss();
                         reactionTimer.setStart(true);
                         reactionTimer.startGame();

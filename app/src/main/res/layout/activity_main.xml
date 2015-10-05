@@ -23,7 +23,7 @@
         android:layout_above="@+id/button3"
         android:layout_alignParentStart="true"
         android:layout_alignEnd="@+id/button"
-        android:onClick="choiceNumOfPlayer" />
+        android:onClick="chooseNumOfPlayer" />
 
     <Button
         android:layout_width="wrap_content"

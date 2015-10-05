@@ -54,7 +54,7 @@ public class MainActivity extends Activity {
     }
 
     //http://stackoverflow.com/questions/12244297/how-to-add-multiple-buttons-on-a-single-alertdialog
-    public void choiceNumOfPlayer(View view){
+    public void chooseNumOfPlayer(View view){
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle("Choose Number of Players");
         builder.setItems(new CharSequence[]
