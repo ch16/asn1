@@ -1,6 +1,9 @@
 chen1-reflex: This game has two modes, the single user mode tests an individual's reaction time,
  the multiplayer mode, from two to four players, simulates the gameshow buzzer
 
+Video Demo URL:
+https://github.com/ch16/asn1/blob/master/doc/Video_chen1-reflex.mkv
+
     Copyright (C) <2015>  <Hong Chen> chen1@ualberta.ca
 
     This program is free software: you can redistribute it and/or modify
